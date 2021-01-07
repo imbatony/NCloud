@@ -43,4 +43,8 @@
     <Watch Include="**\*.razor" />
     <Watch Include="**\*.less" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NCloud.Shared\NCloud.Shared.csproj" />
+  </ItemGroup>
 </Project>

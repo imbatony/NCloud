@@ -1,0 +1,271 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NCloud.Server</name>
+    </assembly>
+    <members>
+        <member name="T:NCloud.Server.Controllers.FileController">
+            <summary>
+            文件操作API
+            </summary>
+        </member>
+        <member name="T:NCloud.Server.Controllers.VersionController">
+            <summary>
+            版本信息API
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Controllers.VersionController.Get">
+            <summary>
+            获取版本信息
+            </summary>
+            <returns>The <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
+        </member>
+        <member name="T:NCloud.Server.Errors.ErrorCodes">
+            <summary>
+            Defines the ErrorCodes.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Errors.ErrorCodes.FILE_NOT_FOUND">
+            <summary>
+            Defines the FILE_NOT_FOUND.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Errors.ErrorCodes.FILE_ACCESS_ERROR">
+            <summary>
+            Defines the FILE_ACCESS_ERROR.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Errors.ErrorCodes.SERVER_ERROR">
+            <summary>
+            Defines the SERVER_ERROR.
+            </summary>
+        </member>
+        <member name="T:NCloud.Server.Program">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Program" />.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Program.Main(System.String[])">
+            <summary>
+            The Main.
+            </summary>
+            <param name="args">The args<see cref="!:string[]"/>.</param>
+        </member>
+        <member name="M:NCloud.Server.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            The CreateHostBuilder.
+            </summary>
+            <param name="args">The args<see cref="!:string[]"/>.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>.</returns>
+        </member>
+        <member name="T:NCloud.Server.RESTfulResultProvider">
+            <summary>
+            RESTful 风格返回值.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.RESTfulResultProvider.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            异常返回值.
+            </summary>
+            <param name="context">.</param>
+            <returns>.</returns>
+        </member>
+        <member name="M:NCloud.Server.RESTfulResultProvider.OnSucceeded(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
+            <summary>
+            成功返回值.
+            </summary>
+            <param name="context">.</param>
+            <returns>.</returns>
+        </member>
+        <member name="M:NCloud.Server.RESTfulResultProvider.OnValidateFailed(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.IEnumerable{System.String}},System.String)">
+            <summary>
+            验证失败返回值.
+            </summary>
+            <param name="context">.</param>
+            <param name="modelStates">.</param>
+            <param name="validationResults">.</param>
+            <param name="validateFailedMessage">.</param>
+            <returns>.</returns>
+        </member>
+        <member name="M:NCloud.Server.RESTfulResultProvider.OnResponseStatusCodes(Microsoft.AspNetCore.Http.HttpContext,System.Int32)">
+            <summary>
+            处理输出状态码.
+            </summary>
+            <param name="context">.</param>
+            <param name="statusCode">.</param>
+            <returns>.</returns>
+        </member>
+        <member name="T:NCloud.Server.Service.Base64FileIdGenerator">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Service.Base64FileIdGenerator" />.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.Base64FileIdGenerator.DecodePath(System.String)">
+            <summary>
+            The DecodePath.
+            </summary>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.Base64FileIdGenerator.EncodedPath(System.String)">
+            <summary>
+            The EncodedPath.
+            </summary>
+            <param name="path">The path<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="T:NCloud.Server.Service.Driver.LocalFileDriver">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Service.Driver.LocalFileDriver" />.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.Driver.LocalFileDriver.fileIdGenerator">
+            <summary>
+            Defines the fileIdGenerator.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.LocalFileDriver.#ctor(NCloud.Core.Abstractions.IFileIdGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Service.Driver.LocalFileDriver"/> class.
+            </summary>
+            <param name="fileIdGenerator">The fileIdGenerator<see cref="T:NCloud.Core.Abstractions.IFileIdGenerator"/>.</param>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.LocalFileDriver.GetFileManager(System.String)">
+            <summary>
+            The GetFileManager.
+            </summary>
+            <param name="url">The url<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:NCloud.Core.Abstractions.IFileManager"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.LocalFileDriver.IsSupport(System.String)">
+            <summary>
+            The IsSupport.
+            </summary>
+            <param name="url">The url<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.Boolean"/>.</returns>
+        </member>
+        <member name="T:NCloud.Server.Service.Driver.DefaultFileManagerFactory">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Service.Driver.DefaultFileManagerFactory" />.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.Driver.DefaultFileManagerFactory.drivers">
+            <summary>
+            Defines the drivers.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.Driver.DefaultFileManagerFactory.fileManagers">
+            <summary>
+            Defines the fileManagers.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Service.Driver.DefaultFileManagerFactory"/> class.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.#ctor(System.Collections.Generic.List{NCloud.Core.Abstractions.IDriver})">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Service.Driver.DefaultFileManagerFactory"/> class.
+            </summary>
+            <param name="drivers">The drivers<see cref="T:System.Collections.Generic.List`1"/>.</param>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.GetFileManager(System.String)">
+            <summary>
+            The GetFileManager.
+            </summary>
+            <param name="url">The config<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:NCloud.Core.Abstractions.IFileManager"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.NCloud#Core#Abstractions#IFileManagerFactory#AddDriver(NCloud.Core.Abstractions.IDriver)">
+            <summary>
+            The AddDriver.
+            </summary>
+            <param name="driver">The driver<see cref="T:NCloud.Core.Abstractions.IDriver"/>.</param>
+        </member>
+        <member name="T:NCloud.Server.Service.FileManager.LocalFileManager">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Service.FileManager.LocalFileManager" />.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.FileManager.LocalFileManager.fileIdGenerator">
+            <summary>
+            Defines the fileIdGenerator.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.FileManager.LocalFileManager.rootPath">
+            <summary>
+            Defines the rootPath.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.FileManager.LocalFileManager.basePath">
+            <summary>
+            Defines the schema.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.#ctor(NCloud.Core.Abstractions.IFileIdGenerator,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Service.FileManager.LocalFileManager"/> class.
+            </summary>
+            <param name="fileIdGenerator">The fileIdGenerator<see cref="T:NCloud.Core.Abstractions.IFileIdGenerator"/>.</param>
+            <param name="root">The root<see cref="T:System.String"/>.</param>
+            <param name="schema">The schema<see cref="T:System.String"/>.</param>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.GetDownloadUrl(NCloud.Core.Model.NCloudFileInfo)">
+            <summary>
+            The GetDownloadUrl.
+            </summary>
+            <param name="file">The file<see cref="T:NCloud.Core.Model.NCloudFileInfo"/>.</param>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.GetFileById(System.String)">
+            <summary>
+            The GetFileById.
+            </summary>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:NCloud.Core.Model.NCloudFileInfo"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.GetFiles(System.String)">
+            <summary>
+            The GetFiles.
+            </summary>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.Collections.Generic.IEnumerable`1"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.GetRootId">
+            <summary>
+            The GetRootId.
+            </summary>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="T:NCloud.Server.Startup">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Startup" />.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Startup"/> class.
+            </summary>
+            <param name="configuration">The configuration<see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>.</param>
+        </member>
+        <member name="P:NCloud.Server.Startup.Configuration">
+            <summary>
+            Gets the Configuration.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            The ConfigureServices.
+            </summary>
+            <param name="services">The services<see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</param>
+        </member>
+        <member name="M:NCloud.Server.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            The Configure.
+            </summary>
+            <param name="app">The app<see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>.</param>
+            <param name="env">The env<see cref="T:Microsoft.AspNetCore.Hosting.IWebHostEnvironment"/>.</param>
+        </member>
+    </members>
+</doc>
