@@ -15,32 +15,32 @@
         /// <summary>
         /// Gets or sets the Id.
         /// </summary>
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the ParentId.
         /// </summary>
-        public string ParentId { get; set; }
+        public string ParentId { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the UpdateTime.
         /// </summary>
-        public DateTime UpdateTime { get; set; }
+        public DateTime UpdateTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Gets or sets the CreateTime.
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public DateTime CreateTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Gets or sets the Size.
         /// </summary>
-        public long Size { get; set; }
+        public long Size { get; set; } = 0;
 
         /// <summary>
         /// Gets or sets the Ext.
         /// </summary>
-        public string Ext { get; set; }
+        public string Ext { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the Type.
@@ -48,9 +48,9 @@
         public FileType Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the Schema.
+        /// Gets or sets the BaseId.
         /// </summary>
-        public string Schema { get; set; }
+        public string BaseId { get; set; }
 
         /// <summary>
         /// Defines the FileType.

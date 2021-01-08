@@ -6,8 +6,39 @@
     <members>
         <member name="T:NCloud.Server.Controllers.FileController">
             <summary>
-            文件操作API
+            文件操作API.
             </summary>
+        </member>
+        <member name="F:NCloud.Server.Controllers.FileController.factory">
+            <summary>
+            Defines the factory.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Controllers.FileController.fileIdGenerator">
+            <summary>
+            Defines the fileIdGenerator.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Controllers.FileController.#ctor(NCloud.Core.Abstractions.IFileManagerFactory,NCloud.Core.Abstractions.IFileIdGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Controllers.FileController"/> class.
+            </summary>
+            <param name="factory">The factory<see cref="T:NCloud.Core.Abstractions.IFileManagerFactory"/>.</param>
+            <param name="fileIdGenerator">The fileIdGenerator<see cref="T:NCloud.Core.Abstractions.IFileIdGenerator"/>.</param>
+        </member>
+        <member name="M:NCloud.Server.Controllers.FileController.GetFiles(System.String,System.String)">
+            <summary>
+            列取文件夹下的文件.
+            </summary>
+            <param name="baseId">The bathPath<see cref="T:System.String"/>baseId.</param>
+            <param name="id">The id<see cref="T:System.String"/>文件Id.</param>
+            <returns>The <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Controllers.FileController.GetRoot">
+            <summary>
+            列取根文件夹下的文件.
+            </summary>
+            <returns>The <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
         </member>
         <member name="T:NCloud.Server.Controllers.VersionController">
             <summary>
@@ -25,6 +56,11 @@
             Defines the ErrorCodes.
             </summary>
         </member>
+        <member name="F:NCloud.Server.Errors.ErrorCodes.FILE_PATH_INVALID">
+            <summary>
+            Defines the FILE_PATH_INVALID.
+            </summary>
+        </member>
         <member name="F:NCloud.Server.Errors.ErrorCodes.FILE_NOT_FOUND">
             <summary>
             Defines the FILE_NOT_FOUND.
@@ -35,9 +71,24 @@
             Defines the FILE_ACCESS_ERROR.
             </summary>
         </member>
+        <member name="F:NCloud.Server.Errors.ErrorCodes.FILE_OPT_NOT_SUPPORT">
+            <summary>
+            Defines the FILE_OPT_NOT_SUPPORT.
+            </summary>
+        </member>
         <member name="F:NCloud.Server.Errors.ErrorCodes.SERVER_ERROR">
             <summary>
             Defines the SERVER_ERROR.
+            </summary>
+        </member>
+        <member name="T:NCloud.Server.Options.DevelopInitFilesOptions">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Options.DevelopInitFilesOptions" />.
+            </summary>
+        </member>
+        <member name="P:NCloud.Server.Options.DevelopInitFilesOptions.Urls">
+            <summary>
+            Gets or sets the Urls.
             </summary>
         </member>
         <member name="T:NCloud.Server.Program">
@@ -49,13 +100,13 @@
             <summary>
             The Main.
             </summary>
-            <param name="args">The args<see cref="!:string[]"/>.</param>
+            <param name="args">The args.</param>
         </member>
         <member name="M:NCloud.Server.Program.CreateHostBuilder(System.String[])">
             <summary>
             The CreateHostBuilder.
             </summary>
-            <param name="args">The args<see cref="!:string[]"/>.</param>
+            <param name="args">The args.</param>
             <returns>The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>.</returns>
         </member>
         <member name="T:NCloud.Server.RESTfulResultProvider">
@@ -114,6 +165,36 @@
             <param name="path">The path<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:System.String"/>.</returns>
         </member>
+        <member name="T:NCloud.Server.Service.DataProtectFileIdGenerator">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Service.DataProtectFileIdGenerator" />.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.DataProtectFileIdGenerator.dataProtector">
+            <summary>
+            Defines the dataProtector.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.DataProtectFileIdGenerator.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Service.DataProtectFileIdGenerator"/> class.
+            </summary>
+            <param name="dataProtectorProvider">The dataProtector<see cref="T:Microsoft.AspNetCore.DataProtection.IDataProtectionProvider"/>.</param>
+        </member>
+        <member name="M:NCloud.Server.Service.DataProtectFileIdGenerator.DecodePath(System.String)">
+            <summary>
+            The DecodePath.
+            </summary>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.DataProtectFileIdGenerator.EncodedPath(System.String)">
+            <summary>
+            The EncodedPath.
+            </summary>
+            <param name="path">The path<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
         <member name="T:NCloud.Server.Service.Driver.LocalFileDriver">
             <summary>
             Defines the <see cref="T:NCloud.Server.Service.Driver.LocalFileDriver" />.
@@ -124,20 +205,63 @@
             Defines the fileIdGenerator.
             </summary>
         </member>
-        <member name="M:NCloud.Server.Service.Driver.LocalFileDriver.#ctor(NCloud.Core.Abstractions.IFileIdGenerator)">
+        <member name="F:NCloud.Server.Service.Driver.LocalFileDriver.serviceProvider">
+            <summary>
+            Defines the serviceProvider.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.LocalFileDriver.#ctor(NCloud.Core.Abstractions.IFileIdGenerator,System.IServiceProvider)">
             <summary>
             Initializes a new instance of the <see cref="T:NCloud.Server.Service.Driver.LocalFileDriver"/> class.
             </summary>
             <param name="fileIdGenerator">The fileIdGenerator<see cref="T:NCloud.Core.Abstractions.IFileIdGenerator"/>.</param>
+            <param name="serviceProvider">.</param>
         </member>
-        <member name="M:NCloud.Server.Service.Driver.LocalFileDriver.GetFileManager(System.String)">
+        <member name="M:NCloud.Server.Service.Driver.LocalFileDriver.GetFileManager(System.String,System.String)">
             <summary>
             The GetFileManager.
             </summary>
             <param name="url">The url<see cref="T:System.String"/>.</param>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:NCloud.Core.Abstractions.IFileManager"/>.</returns>
         </member>
         <member name="M:NCloud.Server.Service.Driver.LocalFileDriver.IsSupport(System.String)">
+            <summary>
+            The IsSupport.
+            </summary>
+            <param name="url">The url<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.Boolean"/>.</returns>
+        </member>
+        <member name="T:NCloud.Server.Service.Driver.RootFileDriver">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Service.Driver.RootFileDriver" />.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.Driver.RootFileDriver.ROOT_DIR">
+            <summary>
+            Defines the ROOT_DIR.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.Driver.RootFileDriver.fileIdGenerator">
+            <summary>
+            Defines the fileIdGenerator.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.RootFileDriver.#ctor(NCloud.Core.Abstractions.IFileIdGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Service.Driver.RootFileDriver"/> class.
+            </summary>
+            <param name="fileIdGenerator">The fileIdGenerator<see cref="T:NCloud.Core.Abstractions.IFileIdGenerator"/>.</param>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.RootFileDriver.GetFileManager(System.String,System.String)">
+            <summary>
+            The GetFileManager.
+            </summary>
+            <param name="url">The url<see cref="T:System.String"/>.</param>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:NCloud.Core.Abstractions.IFileManager"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.RootFileDriver.IsSupport(System.String)">
             <summary>
             The IsSupport.
             </summary>
@@ -159,22 +283,30 @@
             Defines the fileManagers.
             </summary>
         </member>
-        <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.#ctor">
+        <member name="F:NCloud.Server.Service.Driver.DefaultFileManagerFactory.fileIdGenerator">
             <summary>
-            Initializes a new instance of the <see cref="T:NCloud.Server.Service.Driver.DefaultFileManagerFactory"/> class.
+            Defines the fileIdGenerator.
             </summary>
         </member>
-        <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.#ctor(System.Collections.Generic.List{NCloud.Core.Abstractions.IDriver})">
+        <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.#ctor(System.Collections.Generic.List{NCloud.Core.Abstractions.IDriver},NCloud.Core.Abstractions.IFileIdGenerator)">
             <summary>
             Initializes a new instance of the <see cref="T:NCloud.Server.Service.Driver.DefaultFileManagerFactory"/> class.
             </summary>
             <param name="drivers">The drivers<see cref="T:System.Collections.Generic.List`1"/>.</param>
+            <param name="fileIdGenerator">The fileIdGenerator<see cref="T:NCloud.Core.Abstractions.IFileIdGenerator"/>.</param>
         </member>
         <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.GetFileManager(System.String)">
             <summary>
             The GetFileManager.
             </summary>
-            <param name="url">The config<see cref="T:System.String"/>.</param>
+            <param name="baseId">The baseId<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:NCloud.Core.Abstractions.IFileManager"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.GetFileManagerByUrl(System.String)">
+            <summary>
+            The GetFileManagerByUrl.
+            </summary>
+            <param name="url">The url<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:NCloud.Core.Abstractions.IFileManager"/>.</returns>
         </member>
         <member name="M:NCloud.Server.Service.Driver.DefaultFileManagerFactory.NCloud#Core#Abstractions#IFileManagerFactory#AddDriver(NCloud.Core.Abstractions.IDriver)">
@@ -198,24 +330,36 @@
             Defines the rootPath.
             </summary>
         </member>
-        <member name="F:NCloud.Server.Service.FileManager.LocalFileManager.basePath">
+        <member name="F:NCloud.Server.Service.FileManager.LocalFileManager.name">
             <summary>
-            Defines the schema.
+            Defines the name.
             </summary>
         </member>
-        <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.#ctor(NCloud.Core.Abstractions.IFileIdGenerator,System.String,System.String)">
+        <member name="F:NCloud.Server.Service.FileManager.LocalFileManager.id">
+            <summary>
+            Defines the id.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.FileManager.LocalFileManager.logger">
+            <summary>
+            Defines the logger.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.#ctor(NCloud.Core.Abstractions.IFileIdGenerator,System.String,System.String,System.String,Microsoft.Extensions.Logging.ILogger{NCloud.Server.Service.FileManager.LocalFileManager})">
             <summary>
             Initializes a new instance of the <see cref="T:NCloud.Server.Service.FileManager.LocalFileManager"/> class.
             </summary>
             <param name="fileIdGenerator">The fileIdGenerator<see cref="T:NCloud.Core.Abstractions.IFileIdGenerator"/>.</param>
             <param name="root">The root<see cref="T:System.String"/>.</param>
-            <param name="schema">The schema<see cref="T:System.String"/>.</param>
+            <param name="name">.</param>
+            <param name="id">The name<see cref="T:System.String"/>.</param>
+            <param name="logger">The logger<see cref="T:Microsoft.Extensions.Logging.ILogger"/>.</param>
         </member>
-        <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.GetDownloadUrl(NCloud.Core.Model.NCloudFileInfo)">
+        <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.GetDownloadUrlById(System.String)">
             <summary>
             The GetDownloadUrl.
             </summary>
-            <param name="file">The file<see cref="T:NCloud.Core.Model.NCloudFileInfo"/>.</param>
+            <param name="fileId">The file<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:System.String"/>.</returns>
         </member>
         <member name="M:NCloud.Server.Service.FileManager.LocalFileManager.GetFileById(System.String)">
@@ -238,9 +382,80 @@
             </summary>
             <returns>The <see cref="T:System.String"/>.</returns>
         </member>
+        <member name="T:NCloud.Server.Service.FileManager.RootFileManager">
+            <summary>
+            Defines the <see cref="T:NCloud.Server.Service.FileManager.RootFileManager" />.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.FileManager.RootFileManager.fileInfos">
+            <summary>
+            Defines the fileInfos.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.FileManager.RootFileManager.name">
+            <summary>
+            Defines the name.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.FileManager.RootFileManager.id">
+            <summary>
+            Defines the id.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Service.FileManager.RootFileManager.fileIdGenerator">
+            <summary>
+            Defines the fileIdGenerator.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.RootFileManager.#ctor(System.String,System.String,NCloud.Core.Abstractions.IFileIdGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Service.FileManager.RootFileManager"/> class.
+            </summary>
+            <param name="name">The name<see cref="T:System.String"/>.</param>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
+            <param name="fileIdGenerator">.</param>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.RootFileManager.Add(NCloud.Core.Model.NCloudFileInfo)">
+            <summary>
+            The Add.
+            </summary>
+            <param name="info">The info<see cref="T:NCloud.Core.Model.NCloudFileInfo"/>.</param>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.RootFileManager.GetDownloadUrlById(System.String)">
+            <summary>
+            The GetDownloadUrlById.
+            </summary>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.RootFileManager.GetFileById(System.String)">
+            <summary>
+            The GetFileById.
+            </summary>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:NCloud.Core.Model.NCloudFileInfo"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.RootFileManager.GetFiles(System.String)">
+            <summary>
+            The GetFiles.
+            </summary>
+            <param name="id">The id<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.Collections.Generic.IEnumerable`1"/>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.FileManager.RootFileManager.GetRootId">
+            <summary>
+            The GetRootId.
+            </summary>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
         <member name="T:NCloud.Server.Startup">
             <summary>
             Defines the <see cref="T:NCloud.Server.Startup" />.
+            </summary>
+        </member>
+        <member name="F:NCloud.Server.Startup.env">
+            <summary>
+            Defines the env.
             </summary>
         </member>
         <member name="M:NCloud.Server.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">

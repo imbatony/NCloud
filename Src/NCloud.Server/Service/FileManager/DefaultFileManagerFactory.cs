@@ -22,44 +22,53 @@
         private readonly Dictionary<string, IFileManager> fileManagers;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultFileManagerFactory"/> class.
+        /// Defines the fileIdGenerator.
         /// </summary>
-        public DefaultFileManagerFactory()
-        {
-            this.drivers = new List<IDriver>();
-            this.fileManagers = new Dictionary<string, IFileManager>();
-        }
+        private readonly IFileIdGenerator fileIdGenerator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultFileManagerFactory"/> class.
         /// </summary>
         /// <param name="drivers">The drivers<see cref="List{IDriver}"/>.</param>
-        public DefaultFileManagerFactory(List<IDriver> drivers)
+        /// <param name="fileIdGenerator">The fileIdGenerator<see cref="IFileIdGenerator"/>.</param>
+        public DefaultFileManagerFactory(List<IDriver> drivers, IFileIdGenerator fileIdGenerator)
         {
             this.drivers = drivers;
             this.fileManagers = new Dictionary<string, IFileManager>();
+            this.fileIdGenerator = fileIdGenerator;
         }
 
         /// <summary>
         /// The GetFileManager.
         /// </summary>
-        /// <param name="url">The config<see cref="string"/>.</param>
+        /// <param name="baseId">The baseId<see cref="string"/>.</param>
         /// <returns>The <see cref="IFileManager"/>.</returns>
-        public IFileManager GetFileManager(string url)
+        public IFileManager GetFileManager(string baseId)
+        {
+            string url = this.fileIdGenerator.DecodePath(baseId);          
+            return this.GetFileManagerByUrl(url);
+        }
+
+        /// <summary>
+        /// The GetFileManagerByUrl.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="IFileManager"/>.</returns>
+        public IFileManager GetFileManagerByUrl(string url)
         {
             string schema = UrlUtils.GetUrlSchema(url);
             string name = UrlUtils.GetHost(url);
-            string root = UrlUtils.GetParam(url, "root");
-            var s = $"{schema}://{name}?root={root}";
-            if (this.fileManagers.ContainsKey(s))
+            var key = $"{schema}://{name}";
+            if (this.fileManagers.ContainsKey(key))
             {
-                return fileManagers[s];
+                return fileManagers[key];
             }
             else
             {
+                var baseId = this.fileIdGenerator.EncodedPath(key);
                 IDriver driver = this.drivers.Where(e => e.IsSupport(url)).First();
-                IFileManager manager = driver.GetFileManager(url);
-                this.fileManagers[s] = manager;
+                IFileManager manager = driver.GetFileManager(url, baseId);
+                this.fileManagers[key] = manager;
                 return manager;
             }
         }

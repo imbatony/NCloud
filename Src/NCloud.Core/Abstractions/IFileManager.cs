@@ -20,14 +20,14 @@
         /// </summary>
         /// <param name="id">The id<see cref="string"/>.</param>
         /// <returns>The <see cref="NCloudFileInfo"/>.</returns>
-        public NCloudFileInfo GetFileById(string id);
+        public NCloudFileInfo GetFileById(string id = null);
 
         /// <summary>
         /// Get Download Url for file.
         /// </summary>
-        /// <param name="file">.</param>
+        /// <param name="id">The id<see cref="string"/>.</param>
         /// <returns>.</returns>
-        public string GetDownloadUrl(NCloudFileInfo file);
+        public string GetDownloadUrlById(string id);
 
         /// <summary>
         /// The GetRootId.

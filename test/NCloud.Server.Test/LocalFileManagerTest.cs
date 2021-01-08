@@ -2,16 +2,24 @@
 {
     using System;
     using System.IO;
+    using Microsoft.Extensions.Logging;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
     using NCloud.Server.Service.FileManager;
 
+    /// <summary>
+    /// Defines the <see cref="LocalFileManagerTest" />.
+    /// </summary>
     [TestClass]
     public class LocalFileManagerTest
     {
+        /// <summary>
+        /// The TestMethod1.
+        /// </summary>
         [TestMethod]
         public void TestMethod1()
         {
-            var fileManager = new LocalFileManager(new NopeIdGenerator(), Path.GetTempPath(),"local://测试");
+            var fileManager = new LocalFileManager(new NopeIdGenerator(), Path.GetTempPath(), "测试", new Mock<ILogger>().Object);
             var rootId = fileManager.GetRootId();
             var files = fileManager.GetFiles(rootId);
 
@@ -23,9 +31,7 @@
                 Console.WriteLine($"\tParentId:{file.ParentId}");
                 Console.WriteLine($"\tExt:{file.Ext}");
                 Console.WriteLine($"\tType:{file.Type}");
-
             }
-
         }
     }
 }

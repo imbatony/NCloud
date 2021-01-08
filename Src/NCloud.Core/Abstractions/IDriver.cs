@@ -9,8 +9,9 @@
         /// The GetFileManager.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
+        /// <param name="id">The id<see cref="string"/>.</param>
         /// <returns>The <see cref="IFileManager"/>.</returns>
-        IFileManager GetFileManager(string url);
+        IFileManager GetFileManager(string url, string id);
 
         /// <summary>
         /// The IsSupport.

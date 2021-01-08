@@ -8,9 +8,9 @@
         /// <summary>
         /// The GetFileManager.
         /// </summary>
-        /// <param name="config">The config<see cref="string"/>.</param>
+        /// <param name="baseId">The baseId<see cref="string"/>.</param>
         /// <returns>The <see cref="IFileManager"/>.</returns>
-        public IFileManager GetFileManager(string config);
+        public IFileManager GetFileManager(string baseId);
 
         /// <summary>
         /// The AddDriver.

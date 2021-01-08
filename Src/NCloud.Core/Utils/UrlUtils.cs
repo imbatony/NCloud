@@ -42,5 +42,10 @@
             var uri = new Uri(url);
             return uri.Host;
         }
+
+        public static string CreateUrl(string schema, string name)
+        {
+            return $"{schema}://{name}";
+        }
     }
 }
