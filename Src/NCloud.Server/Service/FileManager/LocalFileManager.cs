@@ -1,5 +1,6 @@
 ﻿namespace NCloud.Server.Service.FileManager
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -52,6 +53,7 @@
             this.fileIdGenerator = fileIdGenerator;
             root = root.Replace("$TEMP", Path.GetTempPath());
             root = root.Replace("$CUR", Directory.GetCurrentDirectory());
+            root = root.Replace("$USER_ROOT", Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             this.rootPath = root;
             this.name = name;
             this.id = id;
@@ -94,7 +96,8 @@
                     Name = f.Name,
                     Type = NCloudFileInfo.FileType.Other,
                     Size = f.Length,
-                    BaseId = this.id
+                    BaseId = this.id,
+                    ParentBaseId = this.id
                 };
                 return fileInfo;
             }
@@ -112,7 +115,8 @@
                     Name = isRoot ? this.name : f.Name,
                     Type = NCloudFileInfo.FileType.Directory,
                     Size = 0,
-                    BaseId = this.id
+                    BaseId = this.id,
+                    ParentBaseId = this.id
                 };
                 return fileInfo;
             }
@@ -145,7 +149,8 @@
                         Id = fileIdGenerator.EncodedPath(f.FullName),
                         ParentId = id,
                         Name = f.Name,
-                        BaseId = this.id
+                        BaseId = this.id,                      
+                        ParentBaseId = this.id
 
                     };
                     if (f is DirectoryInfo)

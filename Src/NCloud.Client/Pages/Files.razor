@@ -1,0 +1,15 @@
+﻿@page "/files"
+@using NCloud.Shared.DTO.Response
+@inject NCloud.Shared.Client.FileApiClient FileApiClient
+<PageContainer Title="文件管理">
+    <h3>文件管理</h3>
+</PageContainer>
+@code {
+    private ListFileResponse response;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var res = await FileApiClient.GetRootAsync();
+        response = res.Data;
+    }
+}

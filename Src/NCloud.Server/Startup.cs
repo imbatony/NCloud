@@ -45,7 +45,7 @@
         {
             services.AddConfigurableOptions<DevelopInitFilesOptions>();
             services.AddDataProtection();
-            services.AddSingleton<IFileIdGenerator, DataProtectFileIdGenerator>();
+            services.AddSingleton<IFileIdGenerator, Base16FileIdGenerator>();
             services.AddSingleton<IDriver, LocalFileDriver>();
             services.AddSingleton<IDriver, RootFileDriver>();
             services.AddSingleton<IFileManagerFactory, DefaultFileManagerFactory>(p =>
@@ -65,7 +65,13 @@
                   }
                   return factory;
               });
-
+            services.AddCors(option => option.AddPolicy("cors",
+                policy => policy
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .WithOrigins(
+                  "https://localhost:6001")));
             services.AddControllers()
                 .AddInjectWithUnifyResult<RESTfulResultProvider>();
         }
@@ -90,6 +96,8 @@
             app.UseAuthorization();
 
             app.UseInject(string.Empty);
+
+            app.UseCors("cors");
 
             app.UseEndpoints(endpoints =>
             {

@@ -53,6 +53,11 @@
         public string BaseId { get; set; }
 
         /// <summary>
+        /// Gets or sets the BaseId.
+        /// </summary>
+        public string ParentBaseId { get; set; }
+
+        /// <summary>
         /// Defines the FileType.
         /// </summary>
         public enum FileType

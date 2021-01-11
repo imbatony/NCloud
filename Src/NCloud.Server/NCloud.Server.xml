@@ -81,6 +81,11 @@
             Defines the SERVER_ERROR.
             </summary>
         </member>
+        <member name="F:NCloud.Server.Errors.ErrorCodes.BASE16_KEY_ERROR">
+            <summary>
+            Defines the BASE16_KEY_ERROR.
+            </summary>
+        </member>
         <member name="T:NCloud.Server.Options.DevelopInitFilesOptions">
             <summary>
             Defines the <see cref="T:NCloud.Server.Options.DevelopInitFilesOptions" />.
@@ -146,19 +151,51 @@
             <param name="statusCode">.</param>
             <returns>.</returns>
         </member>
-        <member name="T:NCloud.Server.Service.Base64FileIdGenerator">
+        <member name="T:NCloud.Server.Service.Base16FileIdGenerator">
             <summary>
-            Defines the <see cref="T:NCloud.Server.Service.Base64FileIdGenerator" />.
+            Defines the <see cref="T:NCloud.Server.Service.Base16FileIdGenerator" />.
             </summary>
         </member>
-        <member name="M:NCloud.Server.Service.Base64FileIdGenerator.DecodePath(System.String)">
+        <member name="F:NCloud.Server.Service.Base16FileIdGenerator.codes">
+            <summary>
+            Defines the codes.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.Base16FileIdGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NCloud.Server.Service.Base16FileIdGenerator"/> class.
+            </summary>
+        </member>
+        <member name="M:NCloud.Server.Service.Base16FileIdGenerator.RandomEncrypt">
+            <summary>
+            随机编码数组.
+            </summary>
+            <returns>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.Base16FileIdGenerator.AutoBase16Encrypt(System.String,System.Char[])">
+            <summary>
+            自定义Base16编码.
+            </summary>
+            <param name="str">需要编码的字符串.</param>
+            <param name="autoCode">自定义Base16编码数组,16个元素,可以为数字、字符、特殊符号,若不填,使用默认的Base16编码数组,解码与编码的Base16编码数组一样.</param>
+            <returns>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.Base16FileIdGenerator.AutoBase16Decrypt(System.String,System.Char[])">
+            <summary>
+            自定义Base16解码.
+            </summary>
+            <param name="str">需要解码的字符串.</param>
+            <param name="autoCode">自定义Base16编码数组,16个元素,可以为数字、字符、特殊符号,若不填,使用默认的Base16编码数组,解码与编码的Base16编码数组一样.</param>
+            <returns>.</returns>
+        </member>
+        <member name="M:NCloud.Server.Service.Base16FileIdGenerator.DecodePath(System.String)">
             <summary>
             The DecodePath.
             </summary>
             <param name="id">The id<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:System.String"/>.</returns>
         </member>
-        <member name="M:NCloud.Server.Service.Base64FileIdGenerator.EncodedPath(System.String)">
+        <member name="M:NCloud.Server.Service.Base16FileIdGenerator.EncodedPath(System.String)">
             <summary>
             The EncodedPath.
             </summary>

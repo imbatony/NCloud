@@ -81,7 +81,8 @@
                     Type = NCloudFileInfo.FileType.Directory,
                     Id = this.id,
                     ParentId = this.id,
-                    BaseId = this.id
+                    BaseId = this.id,
+                    ParentBaseId = this.id,
                 };
             }
             else

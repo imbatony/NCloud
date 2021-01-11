@@ -23,7 +23,6 @@
         /// </summary>
         [ErrorCodeItemMetadata("文件访问失败", ErrorCode = "00003")]
         FILE_ACCESS_ERROR,
-
         /// <summary>
         /// Defines the FILE_OPT_NOT_SUPPORT.
         /// </summary>
@@ -33,6 +32,11 @@
         /// Defines the SERVER_ERROR.
         /// </summary>
         [ErrorCodeItemMetadata("服务器运行异常", ErrorCode = "10000")]
-        SERVER_ERROR
+        SERVER_ERROR,
+        /// <summary>
+        /// Defines the BASE16_KEY_ERROR.
+        /// </summary>
+        [ErrorCodeItemMetadata("Base16秘钥设置错误", ErrorCode = "10001")]
+        BASE16_KEY_ERROR
     }
 }

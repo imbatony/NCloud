@@ -19,7 +19,7 @@
         [TestMethod]
         public void TestMethod1()
         {
-            var fileManager = new LocalFileManager(new NopeIdGenerator(), Path.GetTempPath(), "测试", new Mock<ILogger>().Object);
+            var fileManager = new LocalFileManager(new NopeIdGenerator(), Path.GetTempPath(), "测试","", new Mock<ILogger<LocalFileManager>>().Object);
             var rootId = fileManager.GetRootId();
             var files = fileManager.GetFiles(rootId);
 
