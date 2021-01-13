@@ -6,7 +6,6 @@
     using Furion;
     using Furion.FriendlyException;
     using NCloud.Core.Abstractions;
-    using NCloud.Server.Errors;
 
     /// <summary>
     /// Defines the <see cref="Base16FileIdGenerator" />.
@@ -33,7 +32,7 @@
         /// <returns>.</returns>
         private char[] RandomEncrypt()
         {
-            char[] code = new char[16];
+            char[] code = new char[32];
             Random random = new Random();
             int j = 0;
             for (int i = 0; 1 < 2; i++)
@@ -45,7 +44,7 @@
                     code[j] = ch;
                     j++;
                 }
-                if (!Array.Exists(code, char.IsWhiteSpace) && code.Length == 16)
+                if (!Array.Exists(code, char.IsWhiteSpace) && code.Length == 32)
                     break;
             }
             return code;
@@ -59,11 +58,10 @@
         /// <returns>.</returns>
         public static string AutoBase16Encrypt(string str, char[] autoCode)
         {
-            if (autoCode == null || autoCode.Length < 16)
+            if (autoCode == null || autoCode.Length < 32)
             {
-                throw Oops.Oh(ErrorCodes.BASE16_KEY_ERROR);
+                throw Oops.Oh(10000);
             }
-            string innerStr = string.Empty;
             StringBuilder strEn = new StringBuilder();
             System.Collections.ArrayList arr = new System.Collections.ArrayList(Encoding.Default.GetBytes(str));
             for (int i = 0; i < arr.Count; i++)
@@ -72,7 +70,7 @@
                 int v1 = data >> 4;
                 strEn.Append(autoCode[v1]);
                 int v2 = ((data & 0x0f) << 4) >> 4;
-                strEn.Append(autoCode[v2]);
+                strEn.Append(autoCode[v2+16]);
             }
             return strEn.ToString();
         }
@@ -87,7 +85,7 @@
         {
             if (autoCode == null || autoCode.Length < 16)
             {
-                throw Oops.Oh(ErrorCodes.BASE16_KEY_ERROR);
+                throw Oops.Oh(10000);
             }
             int k = 0;
             string dnStr = string.Empty;
@@ -101,7 +99,7 @@
                 int index2 = autoCode.ToList().IndexOf(str[j]);
                 s = (byte)(s ^ index1);
                 s = (byte)(s << 4);
-                s = (byte)(s ^ index2);
+                s = (byte)(s ^ (index2-16));
                 data[k] = s;
                 k++;
             }

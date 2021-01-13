@@ -1,12 +1,9 @@
 ﻿namespace NCloud.Server.Service.Driver
 {
-    using System;
     using Furion.FriendlyException;
-    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using NCloud.Core.Abstractions;
     using NCloud.Core.Utils;
-    using NCloud.Server.Errors;
     using NCloud.Server.Service.FileManager;
 
     /// <summary>
@@ -15,42 +12,53 @@
     public class LocalFileDriver : IDriver
     {
         /// <summary>
-        /// Defines the fileIdGenerator.
+        /// Defines the helper.
         /// </summary>
-        private readonly IFileIdGenerator fileIdGenerator;
+        private readonly ISystemHelper helper;
 
         /// <summary>
-        /// Defines the serviceProvider.
+        /// Defines the logger.
         /// </summary>
-        private readonly IServiceProvider serviceProvider;
+        private readonly ILogger<LocalFileManager> logger;
+
+        /// <summary>
+        /// Defines the parentId.
+        /// </summary>
+        private readonly string parentId;
+
+        /// <summary>
+        /// Defines the parentBaseId.
+        /// </summary>
+        private readonly string parentBaseId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalFileDriver"/> class.
         /// </summary>
-        /// <param name="fileIdGenerator">The fileIdGenerator<see cref="IFileIdGenerator"/>.</param>
-        /// <param name="serviceProvider">.</param>
-        public LocalFileDriver(IFileIdGenerator fileIdGenerator, IServiceProvider serviceProvider)
+        /// <param name="helper">The driver<see cref="ISystemHelper"/>.</param>
+        /// <param name="logger">The logger<see cref="ILogger{LocalFileManager}"/>.</param>
+        public LocalFileDriver(ISystemHelper helper, ILogger<LocalFileManager> logger)
         {
-            this.fileIdGenerator = fileIdGenerator;
-            this.serviceProvider = serviceProvider;
+            this.helper = helper;
+            this.logger = logger;
+            this.parentId = helper.GetRootId();
+            this.parentBaseId = helper.GetRootBaseId();
         }
 
         /// <summary>
-        /// The GetFileManager.
+        /// The GreateFileManager.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
-        /// <param name="id">The id<see cref="string"/>.</param>
         /// <returns>The <see cref="IFileManager"/>.</returns>
-        public IFileManager GetFileManager(string url, string id)
+        public IFileManager GreateFileManager(string url)
         {
             if (!IsSupport(url))
             {
-                throw Oops.Oh(ErrorCodes.FILE_PATH_INVALID, url);
+                throw Oops.Oh(10001, url);
             }
-            var rootPath = UrlUtils.GetParam(url, "root");
-            var name = UrlUtils.GetHost(url);
-            var displayName = UrlUtils.GetParam(url, "displayName") ?? name;
-            return new LocalFileManager(fileIdGenerator, rootPath, displayName, id, serviceProvider.GetRequiredService<ILogger<LocalFileManager>>());
+            var baseId = helper.CreateFileManagerBaseId(url);
+            var rootPath = helper.GetFileManagerRootPath(url);
+            var displayName = helper.GetFileManagerDisplayName(url);
+            return new LocalFileManager(helper, rootPath, displayName, baseId, this.parentBaseId, this.parentId, this.logger);
         }
 
         /// <summary>

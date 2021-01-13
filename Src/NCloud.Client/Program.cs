@@ -7,7 +7,6 @@ namespace NCloud.Client
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Options;
     using NCloud.Client.Config;
     using NCloud.Shared.Client;
 
@@ -45,9 +44,7 @@ namespace NCloud.Client
           );
             services.AddScoped<FileApiClient>();
             services.AddAntDesign();
-            services.AddOptions<ProSettings>().Configure<IConfiguration>((setting, config) => config.GetSection("ProSettings"));
-
-        
+            services.AddOptions<ProSettings>().Configure<IConfiguration>((setting, config) => config.GetSection("ProSettings"));        
         }
     }
 }

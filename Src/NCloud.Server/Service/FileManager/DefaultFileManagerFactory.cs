@@ -4,7 +4,6 @@
     using System.Data;
     using System.Linq;
     using NCloud.Core.Abstractions;
-    using NCloud.Core.Utils;
 
     /// <summary>
     /// Defines the <see cref="DefaultFileManagerFactory" />.
@@ -24,18 +23,18 @@
         /// <summary>
         /// Defines the fileIdGenerator.
         /// </summary>
-        private readonly IFileIdGenerator fileIdGenerator;
+        private readonly ISystemHelper systemHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultFileManagerFactory"/> class.
         /// </summary>
         /// <param name="drivers">The drivers<see cref="List{IDriver}"/>.</param>
-        /// <param name="fileIdGenerator">The fileIdGenerator<see cref="IFileIdGenerator"/>.</param>
-        public DefaultFileManagerFactory(List<IDriver> drivers, IFileIdGenerator fileIdGenerator)
+        /// <param name="systemHelper">The fileIdGenerator<see cref="ISystemHelper"/>.</param>
+        public DefaultFileManagerFactory(List<IDriver> drivers, ISystemHelper systemHelper)
         {
             this.drivers = drivers;
             this.fileManagers = new Dictionary<string, IFileManager>();
-            this.fileIdGenerator = fileIdGenerator;
+            this.systemHelper = systemHelper;
         }
 
         /// <summary>
@@ -45,8 +44,8 @@
         /// <returns>The <see cref="IFileManager"/>.</returns>
         public IFileManager GetFileManager(string baseId)
         {
-            string url = this.fileIdGenerator.DecodePath(baseId);          
-            return this.GetFileManagerByUrl(url);
+            var url = this.systemHelper.GetFilePathById(baseId);
+            return GetFileManagerByUrl(url);
         }
 
         /// <summary>
@@ -56,19 +55,16 @@
         /// <returns>The <see cref="IFileManager"/>.</returns>
         public IFileManager GetFileManagerByUrl(string url)
         {
-            string schema = UrlUtils.GetUrlSchema(url);
-            string name = UrlUtils.GetHost(url);
-            var key = $"{schema}://{name}";
-            if (this.fileManagers.ContainsKey(key))
+            var baseId = this.systemHelper.CreateFileManagerBaseId(url);
+            if (this.fileManagers.ContainsKey(baseId))
             {
-                return fileManagers[key];
+                return fileManagers[baseId];
             }
             else
             {
-                var baseId = this.fileIdGenerator.EncodedPath(key);
                 IDriver driver = this.drivers.Where(e => e.IsSupport(url)).First();
-                IFileManager manager = driver.GetFileManager(url, baseId);
-                this.fileManagers[key] = manager;
+                IFileManager manager = driver.GreateFileManager(url);
+                this.fileManagers[baseId] = manager;
                 return manager;
             }
         }

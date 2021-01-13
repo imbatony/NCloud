@@ -10,7 +10,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using NCloud.Shared.DTO.Response;
 
     /// <summary>
     /// RESTful 风格返回值.

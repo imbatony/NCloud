@@ -43,11 +43,6 @@
         public string Ext { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the Type.
-        /// </summary>
-        public FileType Type { get; set; }
-
-        /// <summary>
         /// Gets or sets the BaseId.
         /// </summary>
         public string BaseId { get; set; }
@@ -56,6 +51,11 @@
         /// Gets or sets the BaseId.
         /// </summary>
         public string ParentBaseId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Type.
+        /// </summary>
+        public FileType Type { get; set; }
 
         /// <summary>
         /// Defines the FileType.

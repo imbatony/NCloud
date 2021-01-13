@@ -3,7 +3,6 @@
     using Furion.DynamicApiController;
     using Microsoft.AspNetCore.Mvc;
     using NCloud.Core.Abstractions;
-    using NCloud.Server.Service.Driver;
     using NCloud.Shared.DTO.Response;
 
     /// <summary>
@@ -17,19 +16,19 @@
         private readonly IFileManagerFactory factory;
 
         /// <summary>
-        /// Defines the fileIdGenerator.
+        /// Defines the systemHelper.
         /// </summary>
-        private readonly IFileIdGenerator fileIdGenerator;
+        private readonly ISystemHelper systemHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileController"/> class.
         /// </summary>
         /// <param name="factory">The factory<see cref="IFileManagerFactory"/>.</param>
-        /// <param name="fileIdGenerator">The fileIdGenerator<see cref="IFileIdGenerator"/>.</param>
-        public FileController(IFileManagerFactory factory, IFileIdGenerator fileIdGenerator)
+        /// <param name="systemHelper">The fileIdGenerator<see cref="ISystemHelper"/>.</param>
+        public FileController(IFileManagerFactory factory, ISystemHelper systemHelper)
         {
             this.factory = factory;
-            this.fileIdGenerator = fileIdGenerator;
+            this.systemHelper = systemHelper;
         }
 
         /// <summary>
@@ -56,10 +55,9 @@
         /// <returns>The <see cref="IActionResult"/>.</returns>
         public IActionResult GetRoot()
         {
-            var rootId = this.fileIdGenerator.EncodedPath(RootFileDriver.ROOT_DIR);
-            var manager = factory.GetFileManager(rootId);
-            var cwd = manager.GetFileById();
-            var children = manager.GetFiles();
+            var manager = factory.GetFileManager(systemHelper.GetRootBaseId());
+            var cwd = manager.GetFileById(systemHelper.GetRootId());
+            var children = manager.GetFiles(systemHelper.GetRootId());
             return new OkObjectResult(new ListFileResponse
             {
                 CWD = cwd,

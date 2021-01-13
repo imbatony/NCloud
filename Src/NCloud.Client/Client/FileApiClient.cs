@@ -32,5 +32,16 @@
         {
             return this.httpClient.GetFromJsonAsync<RESTfulResult<ListFileResponse>>("/api/file/root");
         }
+
+        /// <summary>
+        /// The GetByBaseIdAndId.
+        /// </summary>
+        /// <param name="baseId">The baseId<see cref="string"/>.</param>
+        /// <param name="id">The id<see cref="string"/>.</param>
+        /// <returns>The <see cref="Task{RESTfulResult{ListFileResponse}}"/>.</returns>
+        public Task<RESTfulResult<ListFileResponse>> GetByBaseIdAndId(string baseId, string id)
+        {
+            return this.httpClient.GetFromJsonAsync<RESTfulResult<ListFileResponse>>($"/api/file/files/{baseId}/{id}");
+        }
     }
 }

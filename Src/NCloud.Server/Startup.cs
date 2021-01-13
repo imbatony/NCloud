@@ -1,5 +1,6 @@
 ﻿namespace NCloud.Server
 {
+    using System.Diagnostics;
     using System.Linq;
     using Furion;
     using Microsoft.AspNetCore.Builder;
@@ -44,17 +45,20 @@
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddConfigurableOptions<DevelopInitFilesOptions>();
+            services.AddConfigurableOptions<RootDriverOptions>();
             services.AddDataProtection();
+            services.AddSingleton <ISystemHelper, SystemHelper>();
             services.AddSingleton<IFileIdGenerator, Base16FileIdGenerator>();
-            services.AddSingleton<IDriver, LocalFileDriver>();
             services.AddSingleton<IDriver, RootFileDriver>();
+            services.AddSingleton<IDriver, LocalFileDriver>();
             services.AddSingleton<IFileManagerFactory, DefaultFileManagerFactory>(p =>
               {
-                  var factory = new DefaultFileManagerFactory(p.GetServices<IDriver>().ToList(), p.GetService<IFileIdGenerator>());
-                  factory.GetFileManagerByUrl(RootFileDriver.ROOT_DIR);
+                  var systemHelper = p.GetService<ISystemHelper>();
+                  var factory = new DefaultFileManagerFactory(p.GetServices<IDriver>().ToList(), systemHelper);
+                  factory.GetFileManager(systemHelper.GetRootBaseId());
                   if (env.IsDevelopment())
                   {
-                      RootFileManager root = (RootFileManager)factory.GetFileManagerByUrl(RootFileDriver.ROOT_DIR);
+                      RootFileManager root = (RootFileManager)factory.GetFileManager(systemHelper.GetRootBaseId());
                       var op = App.GetOptions<DevelopInitFilesOptions>();
                       foreach (var url in op.Urls)
                       {

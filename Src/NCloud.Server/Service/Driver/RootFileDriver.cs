@@ -10,33 +10,27 @@
     public class RootFileDriver : IDriver
     {
         /// <summary>
-        /// Defines the ROOT_DIR.
+        /// Defines the helper.
         /// </summary>
-        public readonly static string ROOT_DIR = "root://root";
-
-        /// <summary>
-        /// Defines the fileIdGenerator.
-        /// </summary>
-        private readonly IFileIdGenerator fileIdGenerator;
+        private readonly ISystemHelper helper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RootFileDriver"/> class.
         /// </summary>
-        /// <param name="fileIdGenerator">The fileIdGenerator<see cref="IFileIdGenerator"/>.</param>
-        public RootFileDriver(IFileIdGenerator fileIdGenerator)
+        /// <param name="helper">The fileIdGenerator<see cref="ISystemHelper"/>.</param>
+        public RootFileDriver(ISystemHelper helper)
         {
-            this.fileIdGenerator = fileIdGenerator;
+            this.helper = helper;
         }
 
         /// <summary>
         /// The GetFileManager.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
-        /// <param name="id">The id<see cref="string"/>.</param>
         /// <returns>The <see cref="IFileManager"/>.</returns>
-        public IFileManager GetFileManager(string url, string id)
+        public IFileManager GreateFileManager(string url)
         {
-            return new RootFileManager(UrlUtils.GetHost(url), id, fileIdGenerator);
+            return new RootFileManager(helper.GetFileManagerDisplayName(url), helper);
         }
 
         /// <summary>

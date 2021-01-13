@@ -5,7 +5,6 @@
     using Furion.FriendlyException;
     using NCloud.Core.Abstractions;
     using NCloud.Core.Model;
-    using NCloud.Server.Errors;
 
     /// <summary>
     /// Defines the <see cref="RootFileManager" />.
@@ -23,27 +22,32 @@
         private readonly string name;
 
         /// <summary>
-        /// Defines the id.
+        /// Defines the rootId.
         /// </summary>
-        private readonly string id;
+        private readonly string rootId;
+
+        /// <summary>
+        /// Defines the rootBaseId.
+        /// </summary>
+        private readonly string rootBaseId;
 
         /// <summary>
         /// Defines the fileIdGenerator.
         /// </summary>
-        private readonly IFileIdGenerator fileIdGenerator;
+        private readonly ISystemHelper systemHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RootFileManager"/> class.
         /// </summary>
         /// <param name="name">The name<see cref="string"/>.</param>
-        /// <param name="id">The id<see cref="string"/>.</param>
-        /// <param name="fileIdGenerator">.</param>
-        public RootFileManager(string name, string id, IFileIdGenerator fileIdGenerator)
+        /// <param name="systemHelper">systemHelper.</param>
+        public RootFileManager(string name, ISystemHelper systemHelper)
         {
             this.fileInfos = new List<NCloudFileInfo>();
             this.name = name;
-            this.id = id;
-            this.fileIdGenerator = fileIdGenerator;
+            this.rootId = systemHelper.GetRootId();
+            this.rootBaseId = systemHelper.GetRootBaseId();
+            this.systemHelper = systemHelper;
         }
 
         /// <summary>
@@ -52,7 +56,6 @@
         /// <param name="info">The info<see cref="NCloudFileInfo"/>.</param>
         public void Add(NCloudFileInfo info)
         {
-            info.ParentId = this.id;
             this.fileInfos.Add(info);
         }
 
@@ -63,7 +66,7 @@
         /// <returns>The <see cref="string"/>.</returns>
         public string GetDownloadUrlById(string id)
         {
-            throw Oops.Oh(ErrorCodes.FILE_OPT_NOT_SUPPORT);
+            throw Oops.Oh(10005);
         }
 
         /// <summary>
@@ -73,21 +76,21 @@
         /// <returns>The <see cref="NCloudFileInfo"/>.</returns>
         public NCloudFileInfo GetFileById(string id = null)
         {
-            if (string.IsNullOrEmpty(id) || fileIdGenerator.IsEqual(id, this.GetRootId()))
+            if (string.IsNullOrEmpty(id) || systemHelper.IsIdEqual(id, this.GetRootId()))
             {
                 return new NCloudFileInfo
                 {
                     Name = this.name,
                     Type = NCloudFileInfo.FileType.Directory,
-                    Id = this.id,
-                    ParentId = this.id,
-                    BaseId = this.id,
-                    ParentBaseId = this.id,
+                    Id = this.rootId,
+                    ParentId = this.rootId,
+                    BaseId = this.rootBaseId,
+                    ParentBaseId = this.rootBaseId
                 };
             }
             else
             {
-                return this.fileInfos.Where(f => fileIdGenerator.IsEqual(f.Id, id)).FirstOrDefault() ?? throw Oops.Oh(ErrorCodes.FILE_NOT_FOUND); ;
+                return this.fileInfos.Where(f => systemHelper.IsIdEqual(f.Id, id)).FirstOrDefault() ?? throw Oops.Oh(10002); 
             }
         }
 
@@ -107,7 +110,7 @@
         /// <returns>The <see cref="string"/>.</returns>
         public string GetRootId()
         {
-            return this.id;
+            return this.rootId;
         }
     }
 }

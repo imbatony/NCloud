@@ -5,6 +5,7 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
+    using NCloud.Core.Abstractions;
     using NCloud.Server.Service.FileManager;
 
     /// <summary>
@@ -19,7 +20,7 @@
         [TestMethod]
         public void TestMethod1()
         {
-            var fileManager = new LocalFileManager(new NopeIdGenerator(), Path.GetTempPath(), "测试","", new Mock<ILogger<LocalFileManager>>().Object);
+            var fileManager = new LocalFileManager(new Mock<ISystemHelper>().Object, Path.GetTempPath(), "测试","", "", "", new Mock<ILogger<LocalFileManager>>().Object);
             var rootId = fileManager.GetRootId();
             var files = fileManager.GetFiles(rootId);
 

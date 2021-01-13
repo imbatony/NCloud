@@ -1,15 +1,31 @@
 ﻿@page "/files"
-@using NCloud.Shared.DTO.Response
-@inject NCloud.Shared.Client.FileApiClient FileApiClient
+@page "/files/{BaseId?}/{Id?}"
+@using NCloud.Client.Display
+@inherits FileViewBase
 <PageContainer Title="文件管理">
-    <h3>文件管理</h3>
+    <AntList DataSource="@fileList" TItem="FileDisplayInfo" OnItemClick="ItemClick" Loading="@loading">
+        <Header>
+            <Button Type="primary" Icon="step-backward" Disabled="@IsRoot" OnClick="BackwardClick">
+                上一步
+            </Button>
+        </Header>
+        <ChildContent>
+            <ListItem Actions="actions">
+                <ListItemMeta Description="Ant Design, a design language for background applications, is refined by Ant UED Team">
+                    <AvatarTemplate>
+                        <Avatar Src="@context.Icon" Size="large" Shape="square"></Avatar>
+                    </AvatarTemplate>
+                    <TitleTemplate>@context.Name
+                    </TitleTemplate>
+                </ListItemMeta>
+            </ListItem>
+        </ChildContent>
+    </AntList>
 </PageContainer>
 @code {
-    private ListFileResponse response;
+    static RenderFragment download =@<a key="list-loadmore-edit">下载 </a>;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var res = await FileApiClient.GetRootAsync();
-        response = res.Data;
-    }
+    static RenderFragment more = @<a key="list-loadmore-more">更多 </a>;
+
+    public RenderFragment[] actions = new[] { download, more };
 }
