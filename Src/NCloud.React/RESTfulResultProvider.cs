@@ -1,4 +1,4 @@
-﻿namespace NCloud.Server
+﻿namespace NCloud.React
 {
     using System;
     using System.Collections.Generic;
@@ -14,7 +14,7 @@
     /// <summary>
     /// RESTful 风格返回值.
     /// </summary>
-    [SkipScan, UnifyModel(typeof(Shared.DTO.Response.RESTfulResult<>))]
+    [SkipScan, UnifyModel(typeof(RESTfulResult<>))]
     public class RESTfulResultProvider : IUnifyResultProvider
     {
         /// <summary>
@@ -53,7 +53,7 @@
             else if (context.Result is EmptyResult) data = null;
             else return null;
 
-            return new JsonResult(new Shared.DTO.Response.RESTfulResult<object>
+            return new JsonResult(new RESTfulResult<object>
             {
                 StatusCode = context.Result is EmptyResult ? StatusCodes.Status204NoContent : StatusCodes.Status200OK,  // 处理没有返回值情况 204
                 Succeeded = true,
@@ -74,7 +74,7 @@
         /// <returns>.</returns>
         public IActionResult OnValidateFailed(ActionExecutingContext context, ModelStateDictionary modelStates, Dictionary<string, IEnumerable<string>> validationResults, string validateFailedMessage)
         {
-            return new JsonResult(new Shared.DTO.Response.RESTfulResult<object>
+            return new JsonResult(new RESTfulResult<object>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 Succeeded = false,
@@ -97,7 +97,7 @@
             {
                 // 处理 401 状态码
                 case StatusCodes.Status401Unauthorized:
-                    await context.Response.WriteAsJsonAsync(new Shared.DTO.Response.RESTfulResult<object>
+                    await context.Response.WriteAsJsonAsync(new RESTfulResult<object>
                     {
                         StatusCode = StatusCodes.Status401Unauthorized,
                         Succeeded = false,
@@ -109,7 +109,7 @@
                     break;
                 // 处理 403 状态码
                 case StatusCodes.Status403Forbidden:
-                    await context.Response.WriteAsJsonAsync(new Shared.DTO.Response.RESTfulResult<object>
+                    await context.Response.WriteAsJsonAsync(new RESTfulResult<object>
                     {
                         StatusCode = StatusCodes.Status403Forbidden,
                         Succeeded = false,

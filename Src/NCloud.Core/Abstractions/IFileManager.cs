@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="id">The id<see cref="string"/>.</param>
         /// <returns>The <see cref="IEnumerable{File}"/>.</returns>
-        public IEnumerable<NCloudFileInfo> GetFiles(string id = null);
+        public List<NCloudFileInfo> GetFiles(string id = null);
 
         /// <summary>
         /// The GetFileById.
