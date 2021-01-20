@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link} from 'react-router-dom';
 import { ApplicationState } from '../store';
 import * as FileStore from '../store/Files';
-import * as folder from '../img/filetypes/folder.png';
+import folder from '../img/filetypes/folder.png';
 import { Card, Elevation } from "@blueprintjs/core";
 
 // At runtime, Redux will merge together...
@@ -33,12 +33,13 @@ class Files extends React.PureComponent<FilesProps> {
         );
     }
     private goBack() {
-        this.props.history.goBack();
+        this.props.history.back();
     }
     private redirect(baseId:string,id:string) {
         this.props.history.push(`/files/${baseId}/${id}`);
     }
     private ensureDataFetched() {
+        console.log('loading data')
         const baseId = this.props.match.params.baseId || this.props.baseId;
         const id = this.props.match.params.id || this.props.id;
         this.props.load(baseId,id);
@@ -57,12 +58,19 @@ class Files extends React.PureComponent<FilesProps> {
         }
     }
     private renderFilesTable() {
+        console.log('loading data');
         return (
             <React.Fragment>
                 {this.props.children.map((file: FileStore.FileInfo) =>
-                    <Card interactive={true} elevation={Elevation.TWO}>
-                        <p><img src={folder} />{file.name}</p>
-                        <span>{this.getFileSize(file.size)}</span>
+                    <Card interactive={true} elevation={Elevation.TWO} key={file.id}>
+                        <div className="container showgrid">  
+                            <div className="span-4 border">  
+                                <img src={folder} />
+                            </div>
+                            <div className="span-6">
+                                <span>{file.name}</span>    
+                            </div>  
+                        </div>                      
                     </Card>
                     )}
             </React.Fragment>

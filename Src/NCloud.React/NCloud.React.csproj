@@ -24,18 +24,8 @@
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ClientApp\src\components\Navigation.tsx" />
-    <None Remove="ClientApp\src\pages\Files.tsx" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\NCloud.Core\NCloud.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\pages\Files.tsx" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
