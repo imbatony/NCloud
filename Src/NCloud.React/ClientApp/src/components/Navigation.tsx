@@ -1,4 +1,5 @@
 ﻿import * as React from "react";
+import { Link } from 'react-router-dom';
 import {
   Alignment,
   AnchorButton,
@@ -16,7 +17,7 @@ export class Navigation extends React.PureComponent<NavigationProps> {
     return (
         <Navbar className={Classes.DARK}>
             <NavbarGroup align={Alignment.CENTER}>
-          <NavbarHeading>NCloud</NavbarHeading>
+                <NavbarHeading><Link to="/">NCloud</Link></NavbarHeading>
         </NavbarGroup>
       </Navbar>
     );

@@ -7,7 +7,7 @@
     "@blueprintjs/icons": "^3.24.0",
     "bootstrap": "^4.6.0",
     "connected-react-router": "6.8.0",
-    "history": "5.0.0",
+    "history": "^4.10.1",
     "jquery": "^3.5.1",
     "merge": "2.1.0",
     "npm-check-updates": "^10.2.5",

@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Navigation = void 0;
 var React = require("react");
+var react_router_dom_1 = require("react-router-dom");
 var core_1 = require("@blueprintjs/core");
 var Navigation = /** @class */ (function (_super) {
     __extends(Navigation, _super);
@@ -24,7 +25,8 @@ var Navigation = /** @class */ (function (_super) {
     Navigation.prototype.render = function () {
         return (React.createElement(core_1.Navbar, { className: core_1.Classes.DARK },
             React.createElement(core_1.NavbarGroup, { align: core_1.Alignment.CENTER },
-                React.createElement(core_1.NavbarHeading, null, "NCloud"))));
+                React.createElement(core_1.NavbarHeading, null,
+                    React.createElement(react_router_dom_1.Link, { to: "/" }, "NCloud")))));
     };
     return Navigation;
 }(React.PureComponent));

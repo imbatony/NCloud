@@ -17,6 +17,7 @@ var registerServiceWorker_1 = require("./registerServiceWorker");
 // Create browser history to use in the Redux store
 var baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 var history = history_1.createBrowserHistory({ basename: baseUrl });
+//const history = createBrowserHistory();
 // Get the application-wide store instance, prepopulating with state from the server where available.
 var store = configureStore_1.default(history);
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store },
