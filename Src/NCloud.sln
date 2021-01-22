@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5B9D9CA2-0B5B-4115-BBD0-F12FB2835F66}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\guanwan\AppData\Local\Temp\MetadataAsSource\cf34fb82d5c942c9941faceef6d74a4d\2a1548606de14ccb81d9f25181e71b1b\HostEnvironmentEnvExtensions.cs = C:\Users\guanwan\AppData\Local\Temp\MetadataAsSource\cf34fb82d5c942c9941faceef6d74a4d\2a1548606de14ccb81d9f25181e71b1b\HostEnvironmentEnvExtensions.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{534D1CCB-4889-4C3A-A39E-53FAE64989C3}"
 EndProject
