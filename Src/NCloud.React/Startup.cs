@@ -11,7 +11,6 @@ namespace NCloud.React
     using NCloud.Core.Abstractions;
     using NCloud.React.Options;
     using NCloud.React.Service;
-    using NCloud.React.Service.Driver;
     using NCloud.React.Service.FileManager;
 
     /// <summary>
@@ -51,12 +50,12 @@ namespace NCloud.React
             services.AddDataProtection();
             services.AddSingleton<ISystemHelper, SystemHelper>();
             services.AddSingleton<IFileIdGenerator, Base16FileIdGenerator>();
-            services.AddSingleton<IDriver, RootFileDriver>();
-            services.AddSingleton<IDriver, LocalFileDriver>();
+            services.AddSingleton<IFileManagerProvider, RootFileManagerProvider>();
+            services.AddSingleton<IFileManagerProvider, LocalFileManagerProvider>();
             services.AddSingleton<IFileManagerFactory, DefaultFileManagerFactory>(p =>
               {
                   var systemHelper = p.GetService<ISystemHelper>();
-                  var factory = new DefaultFileManagerFactory(p.GetServices<IDriver>().ToList(), systemHelper);
+                  var factory = new DefaultFileManagerFactory(p.GetServices<IFileManagerProvider>().ToList(), systemHelper);
                   factory.GetFileManager(systemHelper.GetRootBaseId());
                   if (env.IsDevelopment())
                   {

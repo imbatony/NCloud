@@ -15,7 +15,7 @@
         /// <summary>
         /// The AddDriver.
         /// </summary>
-        /// <param name="driver">The driver<see cref="IDriver"/>.</param>
-        public void AddDriver(IDriver driver);
+        /// <param name="driver">The driver<see cref="IFileManagerProvider"/>.</param>
+        public void AddProvider(IFileManagerProvider driver);
     }
 }

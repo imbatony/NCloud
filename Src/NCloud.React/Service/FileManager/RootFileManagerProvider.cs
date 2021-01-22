@@ -1,13 +1,12 @@
-﻿namespace NCloud.React.Service.Driver
+﻿namespace NCloud.React.Service.FileManager
 {
     using NCloud.Core.Abstractions;
     using NCloud.Core.Utils;
-    using NCloud.React.Service.FileManager;
 
     /// <summary>
-    /// Defines the <see cref="RootFileDriver" />.
+    /// Defines the <see cref="RootFileManagerProvider" />.
     /// </summary>
-    public class RootFileDriver : IDriver
+    public class RootFileManagerProvider : IFileManagerProvider
     {
         /// <summary>
         /// Defines the helper.
@@ -15,10 +14,10 @@
         private readonly ISystemHelper helper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RootFileDriver"/> class.
+        /// Initializes a new instance of the <see cref="RootFileManagerProvider"/> class.
         /// </summary>
         /// <param name="helper">The fileIdGenerator<see cref="ISystemHelper"/>.</param>
-        public RootFileDriver(ISystemHelper helper)
+        public RootFileManagerProvider(ISystemHelper helper)
         {
             this.helper = helper;
         }

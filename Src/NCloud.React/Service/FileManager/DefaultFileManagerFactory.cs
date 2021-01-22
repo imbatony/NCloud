@@ -1,4 +1,4 @@
-﻿namespace NCloud.React.Service.Driver
+﻿namespace NCloud.React.Service.FileManager
 {
     using System.Collections.Generic;
     using System.Data;
@@ -13,7 +13,7 @@
         /// <summary>
         /// Defines the drivers.
         /// </summary>
-        private readonly List<IDriver> drivers;
+        private readonly List<IFileManagerProvider> providers;
 
         /// <summary>
         /// Defines the fileManagers.
@@ -28,11 +28,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultFileManagerFactory"/> class.
         /// </summary>
-        /// <param name="drivers">The drivers<see cref="List{IDriver}"/>.</param>
+        /// <param name="providers">The drivers<see cref="List{IDriver}"/>.</param>
         /// <param name="systemHelper">The fileIdGenerator<see cref="ISystemHelper"/>.</param>
-        public DefaultFileManagerFactory(List<IDriver> drivers, ISystemHelper systemHelper)
+        public DefaultFileManagerFactory(List<IFileManagerProvider> providers, ISystemHelper systemHelper)
         {
-            this.drivers = drivers;
+            this.providers = providers;
             this.fileManagers = new Dictionary<string, IFileManager>();
             this.systemHelper = systemHelper;
         }
@@ -62,7 +62,7 @@
             }
             else
             {
-                IDriver driver = this.drivers.Where(e => e.IsSupport(url)).First();
+                IFileManagerProvider driver = this.providers.Where(e => e.IsSupport(url)).First();
                 IFileManager manager = driver.GreateFileManager(url);
                 this.fileManagers[baseId] = manager;
                 return manager;
@@ -72,10 +72,10 @@
         /// <summary>
         /// The AddDriver.
         /// </summary>
-        /// <param name="driver">The driver<see cref="IDriver"/>.</param>
-        void IFileManagerFactory.AddDriver(IDriver driver)
+        /// <param name="provider">The driver<see cref="IFileManagerProvider"/>.</param>
+        void IFileManagerFactory.AddProvider(IFileManagerProvider provider)
         {
-            this.drivers.Add(driver);
+            this.providers.Add(provider);
         }
     }
 }

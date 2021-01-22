@@ -121,6 +121,10 @@ code {
 }
 .filename{
     line-height:32px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 .filesize {
     line-height: 32px;

@@ -1,9 +1,9 @@
 ﻿namespace NCloud.Core.Abstractions
 {
     /// <summary>
-    /// Defines the <see cref="IDriver" />.
+    /// Defines the <see cref="IFileManagerProvider" />.
     /// </summary>
-    public interface IDriver
+    public interface IFileManagerProvider
     {
         /// <summary>
         /// The GetFileManager.

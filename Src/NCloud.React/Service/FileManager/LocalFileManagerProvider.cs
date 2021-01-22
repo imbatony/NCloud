@@ -1,15 +1,14 @@
-﻿namespace NCloud.React.Service.Driver
+﻿namespace NCloud.React.Service.FileManager
 {
     using Furion.FriendlyException;
     using Microsoft.Extensions.Logging;
     using NCloud.Core.Abstractions;
     using NCloud.Core.Utils;
-    using NCloud.React.Service.FileManager;
 
     /// <summary>
-    /// Defines the <see cref="LocalFileDriver" />.
+    /// Defines the <see cref="LocalFileManagerProvider" />.
     /// </summary>
-    public class LocalFileDriver : IDriver
+    public class LocalFileManagerProvider : IFileManagerProvider
     {
         /// <summary>
         /// Defines the helper.
@@ -32,11 +31,11 @@
         private readonly string parentBaseId;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LocalFileDriver"/> class.
+        /// Initializes a new instance of the <see cref="LocalFileManagerProvider"/> class.
         /// </summary>
         /// <param name="helper">The driver<see cref="ISystemHelper"/>.</param>
         /// <param name="logger">The logger<see cref="ILogger{LocalFileManager}"/>.</param>
-        public LocalFileDriver(ISystemHelper helper, ILogger<LocalFileManager> logger)
+        public LocalFileManagerProvider(ISystemHelper helper, ILogger<LocalFileManager> logger)
         {
             this.helper = helper;
             this.logger = logger;

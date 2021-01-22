@@ -1,11 +1,7 @@
-import * as WeatherForecasts from './WeatherForecasts';
 import * as Files from './Files';
-import * as Counter from './Counter';
 
 // The top-level state object
 export interface ApplicationState {
-    counter: Counter.CounterState | undefined;
-    weatherForecasts: WeatherForecasts.WeatherForecastsState | undefined;
     files: Files.FilesState | undefined;
 }
 
@@ -13,8 +9,6 @@ export interface ApplicationState {
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
-    counter: Counter.reducer,
-    weatherForecasts: WeatherForecasts.reducer,
     files: Files.reducer
 };
 

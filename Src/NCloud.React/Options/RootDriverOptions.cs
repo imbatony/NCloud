@@ -1,7 +1,7 @@
 ﻿namespace NCloud.React.Options
 {
     using Furion.ConfigurableOptions;
-    using NCloud.React.Service.Driver;
+    using NCloud.React.Service.FileManager;
 
     /// <summary>
     /// Defines the <see cref="RootDriverOptions" />.

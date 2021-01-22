@@ -124,7 +124,6 @@ class Files extends React.PureComponent<FilesProps> {
     }
     private renderFilesTable() {
         if (this.props.loading) {
-            console.log('loading data');
             return <Spinner intent={Intent.NONE} size={Spinner.SIZE_STANDARD}/>
         } else {
             return (
