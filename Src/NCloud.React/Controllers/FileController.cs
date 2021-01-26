@@ -55,13 +55,10 @@
         /// <returns>The <see cref="IActionResult"/>.</returns>
         public IActionResult GetRoot()
         {
-            var manager = factory.GetFileManager(systemHelper.GetRootBaseId());
-            var cwd = manager.GetFileById(systemHelper.GetRootId());
-            var children = manager.GetFiles(systemHelper.GetRootId());
-            return new OkObjectResult(new ListFileResponse
+            return new OkObjectResult(new RootResponse
             {
-                Cwd = cwd,
-                Children = children
+                BaseId = systemHelper.GetRootBaseId(),
+                Id = systemHelper.GetRootId()
             });
         }
     }

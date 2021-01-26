@@ -78,12 +78,13 @@ namespace NCloud.React
             //    .WithOrigins(
             //      "https://localhost:6001")));
             services.AddControllersWithViews()
+                .AddAppLocalization()
                 .AddInjectWithUnifyResult<RESTfulResultProvider>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "react-app/build";
             });
         }
 
@@ -106,7 +107,7 @@ namespace NCloud.React
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseAppLocalization();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -126,7 +127,7 @@ namespace NCloud.React
             });
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "react-app";
 
                 if (env.IsDevelopment())
                 {

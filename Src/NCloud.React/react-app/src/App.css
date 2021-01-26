@@ -1,0 +1,132 @@
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #E01A76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+}
+
+.grid-cell {
+  flex: 1;
+}
+  .grid-cell.u1 {
+      flex: 0 0 4.167%;
+  }
+
+  .grid-cell.u2 {
+      flex: 0 0 8.333%;
+  }
+
+  .grid-cell.u3 {
+      flex: 0 0 12.500%;
+  }
+
+  .grid-cell.u4 {
+      flex: 0 0 16.667%;
+  }
+
+  .grid-cell.u5 {
+      flex: 0 0 20.833%;
+  }
+
+  .grid-cell.u6 {
+      flex: 0 0 25.000%;
+  }
+
+  .grid-cell.u7 {
+      flex: 0 0 29.167%;
+  }
+
+  .grid-cell.u8 {
+      flex: 0 0 33.333%;
+  }
+
+  .grid-cell.u9 {
+      flex: 0 0 37.500%;
+  }
+
+  .grid-cell.u10 {
+      flex: 0 0 41.667%;
+  }
+
+  .grid-cell.u11 {
+      flex: 0 0 45.833%;
+  }
+
+  .grid-cell.u12 {
+      flex: 0 0 50.000%;
+  }
+
+  .grid-cell.u13 {
+      flex: 0 0 54.167%;
+  }
+
+  .grid-cell.u14 {
+      flex: 0 0 58.333%;
+  }
+
+  .grid-cell.u15 {
+      flex: 0 0 62.500%;
+  }
+
+  .grid-cell.u16 {
+      flex: 0 0 66.667%;
+  }
+
+  .grid-cell.u17 {
+      flex: 0 0 70.833%;
+  }
+
+  .grid-cell.u18 {
+      flex: 0 0 75.000%;
+  }
+
+  .grid-cell.u19 {
+      flex: 0 0 79.167%;
+  }
+
+  .grid-cell.u20 {
+      flex: 0 0 83.333%;
+  }
+
+  .grid-cell.u21 {
+      flex: 0 0 87.500%;
+  }
+
+  .grid-cell.u22 {
+      flex: 0 0 91.667%;
+  }
+
+  .grid-cell.u23 {
+      flex: 0 0 95.833%;
+  }
+
+  .grid-cell.u24 {
+      flex: 0 0 100.000%;
+  }
+.fileicon{
+  width:32px;
+}
+.filename{
+  line-height:32px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.filesize {
+  line-height: 32px;
+  color: #30404D
+}
