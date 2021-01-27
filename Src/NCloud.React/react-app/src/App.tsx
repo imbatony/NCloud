@@ -13,17 +13,14 @@ import { RootContext} from './context'
 export default function App(props: RootResponse) {
     return (
         <RootContext.Provider
-            value={{
-                rootId: props.id,
-                rootBaseId: props.baseId,
-            }}
+            value={props}
         >
             <Router>
                 <Navigation />
                 <div>
                     <Switch>
                         <Route exact path="/" render={() => {
-                            return <Redirect to={`/files/${props.baseId}/${props.id}`}></Redirect>
+                            return <Redirect to={`/files/${props.rootBaseId}/${props.rootId}`}></Redirect>
                         }} />
                         <Route exact path="/files/:baseId/:id"><Files/></Route>
                     </Switch>     

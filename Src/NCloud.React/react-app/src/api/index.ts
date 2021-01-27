@@ -38,11 +38,14 @@ function get<T>(url: string, mockData?: T): Promise<T> {
     }
 }
 export interface RootResponse {
-    baseId: string,
-    id: string
+    name: string,
+    buildId: string,
+    version: string,
+    rootBaseId: string,
+    rootId: string
 }
 export async function getRoot(): Promise<RootResponse> {
-    return await get<RootResponse>('/api/file/root')
+    return await get<RootResponse>('/api/system')
 }
 
 export enum FileType {
