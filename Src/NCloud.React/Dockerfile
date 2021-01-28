@@ -5,7 +5,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 WORKDIR /src
 COPY ["NCloud.React/NCloud.React.csproj", "NCloud.React/"]
 COPY ["NCloud.Core/NCloud.Core.csproj", "NCloud.Core/"]
@@ -15,9 +15,7 @@ WORKDIR "/src/NCloud.React"
 RUN dotnet build "NCloud.React.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install -g yarn
+RUN apk add npm && npm install -g yarn
 RUN dotnet publish "NCloud.React.csproj" -c Release -o /app/publish
 
 FROM base AS final
