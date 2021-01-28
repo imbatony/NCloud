@@ -6,7 +6,7 @@ export interface Locales {
     lang: string,
     data: StringDictionary
 }
-export interface TransProvider {
+interface TransProviderProps {
     i18n: Map<string, StringDictionary>,
     children: JSX.Element
 }
@@ -18,7 +18,7 @@ interface ContextType {
 }
 let defaultContextType: ContextType = { getMessages: () => { return {} }, setNewLang: (l: string) => { }, lang: defaultLocal };
 const Context = createContext<ContextType>(defaultContextType);
-export const TransProvider = ({ i18n, children }: TransProvider) => {
+export const TransProvider = ({ i18n, children }: TransProviderProps) => {
     if (!i18n) {
         throw new Error('No i18n provide.');
     }

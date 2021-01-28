@@ -7,7 +7,6 @@ import reportWebVitals from './reportWebVitals';
 import {getRoot } from './api/'
 import { RootContextProvider, TransProvider } from './hooks'
 import {i18n} from './i18n'
-import { RootConfig } from './types';
 getRoot().then((res) => {
     ReactDOM.render(
         <TransProvider i18n={i18n}>

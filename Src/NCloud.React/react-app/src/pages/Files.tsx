@@ -36,7 +36,7 @@ function FilesTable(props: FileTableProps) {
                     <Card interactive={true} elevation={Elevation.TWO} key={file.id}>
                         <div className="grid" onClick={() => fileItemClicked(file)}>
                             <div className="grid-cell u3">
-                                {renderFileImage(file.ext, file.type === FileType.Directory)}
+                                {renderFileImage(file.ext, file.type === FileType.Directory,file.name)}
                             </div>
                             <div className="grid-cell u17">
                                 <span className="filename">{file.name}</span>
@@ -68,7 +68,7 @@ function FileSize({ size }: FileSizeProps) {
         return <span className="filesize"></span>;
     }
 }
-function renderFileImage(type: string, isDirectory: boolean) {
+function renderFileImage(type: string, isDirectory: boolean,name:string) {
     let icon = FileIcons.file;
     if (isDirectory) {
         icon = FileIcons.folder;
@@ -101,7 +101,7 @@ function renderFileImage(type: string, isDirectory: boolean) {
             icon = FileIcons.zip
         }
     }
-    return <img src={icon} className="fileicon" />
+    return <img src={icon} className="fileicon" alt={name}/>
 }
 
 export default function Files() {
