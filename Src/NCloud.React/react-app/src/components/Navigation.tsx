@@ -7,12 +7,12 @@ import {
   NavbarGroup,
   NavbarHeading
 } from "@blueprintjs/core";
-import {RootContext} from '../context'
+import {useRootContext} from '../hooks'
 
 export interface NavigationProps { }
 
 export function Navigation() {
-  const root = React.useContext(RootContext)
+  const root = useRootContext();
   return (
     <Navbar>
       <NavbarGroup align={Alignment.LEFT}>
@@ -21,7 +21,8 @@ export function Navigation() {
       <NavbarGroup align={Alignment.RIGHT}>
       <Link to="/"><Button className="bp3-minimal" icon="home" text="Home" ></Button></Link>
       <Navbar.Divider />
-      <Button className="bp3-minimal" icon="cog"/>
+      {root.dark?<Button className="bp3-minimal" icon="moon" onClick={()=>{root.setDark(false)}}>light</Button>:<Button className="bp3-minimal" icon="flash" onClick={()=>{root.setDark(true)}}>dark</Button>}
+      <Button className="bp3-minimal" icon="cog">Settings</Button>
       </NavbarGroup>
     </Navbar>
   );

@@ -5,10 +5,18 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import {getRoot } from './api/'
-
+import { RootContextProvider, TransProvider } from './hooks'
+import {i18n} from './i18n'
+import { RootConfig } from './types';
 getRoot().then((res) => {
     ReactDOM.render(
-            <App {...res} />,
+        <TransProvider i18n={i18n}>
+        <RootContextProvider
+            rootConfig={res}
+        >
+            <App/>
+            </RootContextProvider>
+      </TransProvider>,
         document.getElementById('root')
     );
 

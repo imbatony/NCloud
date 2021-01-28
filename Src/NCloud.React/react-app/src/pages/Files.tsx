@@ -4,12 +4,13 @@ import { useRouter } from '../hooks'
 import * as FileIcons from '../img/filetypes';
 import { IBreadcrumbProps,Card, Elevation, Breadcrumbs, Boundary, Spinner, Intent, Alert } from "@blueprintjs/core";
 import { useParams } from 'react-router-dom';
-import { getFiles, FileInfo, FileType } from '../api'
+import { getFiles} from '../api'
+import { FileInfo, FileType } from '../types'
+import {useI18n} from '../hooks'
 interface FileParms {
     baseId: string,
     id: string
 }
-
 interface FileTableProps {
     loading: boolean,
     children: Array<FileInfo>
@@ -111,6 +112,7 @@ export default function Files() {
         loading: false,
         children: []
     })
+    const {message} = useI18n();
     async function fetchFiles() {
         try{
             let res = await getFiles(parm.baseId, parm.id);
@@ -146,10 +148,11 @@ export default function Files() {
         });
         fetchFiles();      
     }, [parm.baseId, parm.id])
+    console.log(message)
     return (
         <React.Fragment>
             <Alert
-                confirmButtonText="好的"
+                confirmButtonText={message["ok"]}
                 isOpen={error.error}
                 onClose={() => setError({ error: false, errorMessage: '' })}
             >

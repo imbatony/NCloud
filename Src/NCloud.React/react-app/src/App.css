@@ -1,16 +1,9 @@
 /* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+html,body,#root{
+    height: 100%;
 }
-
-code {
-  color: #E01A76;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+body.bp3-dark{
+    background-color: #394b59;
 }
 
 .grid {
@@ -128,5 +121,4 @@ code {
 }
 .filesize {
   line-height: 32px;
-  color: #30404D
 }

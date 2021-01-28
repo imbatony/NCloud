@@ -25,12 +25,7 @@
         /// <returns>The <see cref="Task"/>.</returns>
         public Task OnExceptionAsync(ExceptionContext context)
         {
-            // 写日志
-            // 解析异常信息
-            string message = context.Exception.Message;
-
             this.logger.LogError(context.Exception, context.Exception.Message);
-
             return Task.CompletedTask;
         }
     }
