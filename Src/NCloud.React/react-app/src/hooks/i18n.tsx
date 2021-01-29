@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useContext } from 'react';
+import React, { createContext, useEffect, useContext, useState } from 'react';
 import { useLocalStorage } from './useLocalstorage'
 import { StringDictionary, defaultLocal } from '../types'
 export interface Locales {
@@ -23,7 +23,7 @@ export const TransProvider = ({ i18n, children }: TransProviderProps) => {
         throw new Error('No i18n provide.');
     }
     const [lang, setLang] = useLocalStorage<string>('lang', defaultLocal);
-    const [locales, setLocales] = useLocalStorage<Locales>('locales');
+    const [locales, setLocales] = useState<Locales>();
 
     useEffect(() => {
         // load lang
@@ -53,7 +53,7 @@ export const TransProvider = ({ i18n, children }: TransProviderProps) => {
         }
     });
 
-    const getMessages = () => locales.data;
+    const getMessages = () => locales?.data||{};
 
     const setNewLang = (newLang: string) => {
         setLang(newLang);

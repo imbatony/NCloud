@@ -1,18 +1,18 @@
 ﻿namespace NCloud.React.Service.FileManager
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
     using Furion.FriendlyException;
     using Microsoft.Extensions.Logging;
     using NCloud.Core.Abstractions;
     using NCloud.Core.Model;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// Defines the <see cref="LocalFileManager" />.
     /// </summary>
-    public class LocalFileManager : IFileManager
+    public class LocalFileManager : IFileManager, IStreamable
     {
         /// <summary>
         /// Defines the helper.
@@ -89,7 +89,7 @@
         /// </summary>
         /// <param name="fileId">The fileId<see cref="string"/>.</param>
         /// <returns>The <see cref="NCloudFileInfo"/>.</returns>
-        public NCloudFileInfo GetFileById(string fileId)
+        public NCloudFileInfo GetFileById(string fileId = null)
         {
             if (fileId == null)
             {
@@ -142,9 +142,9 @@
         /// </summary>
         /// <param name="fileId">The id<see cref="string"/>.</param>
         /// <returns>The <see cref="List{NCloudFileInfo}"/>.</returns>
-        public List<NCloudFileInfo> GetFiles(string fileId)
+        public List<NCloudFileInfo> GetFiles(string fileId = null)
         {
-           
+
             if (fileId == null)
             {
                 fileId = GetRootId();
@@ -189,12 +189,27 @@
                 catch (UnauthorizedAccessException)
                 {
                     throw Oops.Oh(10007);
-                }              
+                }
             }
             else
             {
                 throw Oops.Oh(10002);
             }
+        }
+
+        /// <summary>
+        /// The GetFileStream.
+        /// </summary>
+        /// <param name="id">The id<see cref="string"/>.</param>
+        /// <returns>The <see cref="(string name, Stream fileStream)"/>.</returns>
+        public Stream GetFileStream(NCloudFileInfo fileInfo)
+        {
+            if (fileInfo.Type == NCloudFileInfo.FileType.Directory)
+            {
+                throw Oops.Oh(10005);
+            }
+            var path = this.helper.GetFilePathById(fileInfo.Id);
+            return File.OpenRead(path);
         }
 
         /// <summary>

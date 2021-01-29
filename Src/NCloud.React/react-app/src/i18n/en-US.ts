@@ -1,3 +1,10 @@
 export const en_US = {
-    "ok":"ok"
+    "ok":"OK",
+    "download":"Download",
+    "home":"Home",
+    "dark":"Dark",
+    "light":"Light",
+    "settings":"Settings",
+    "filesize":"File Size",
+
 }

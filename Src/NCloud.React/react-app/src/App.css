@@ -13,6 +13,9 @@ body.bp3-dark{
 
 .grid-cell {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
   .grid-cell.u1 {
       flex: 0 0 4.167%;
@@ -110,15 +113,24 @@ body.bp3-dark{
       flex: 0 0 100.000%;
   }
 .fileicon{
-  width:32px;
+  width:20px;
 }
 .filename{
-  line-height:32px;
+  line-height:20px;
+  font-size: small;
   text-overflow: ellipsis;
+  word-break: break-all;
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  overflow: hidden;
   -webkit-box-orient: vertical;
+  padding: 0 10px;
 }
 .filesize {
-  line-height: 32px;
+  line-height: 20px;
+  font-size: small;
+  padding: 0 5px
+}
+.fileline{
+    user-select: 'none';
 }

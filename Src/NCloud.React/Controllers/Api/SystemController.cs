@@ -1,4 +1,4 @@
-﻿namespace NCloud.React.Controllers
+﻿namespace NCloud.React.Controllers.Api
 {
     using System.Collections.Generic;
     using Furion;

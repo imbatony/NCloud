@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {useState,useEffect}  from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from '../hooks'
 import * as FileIcons from '../img/filetypes';
-import { IBreadcrumbProps,Card, Elevation, Breadcrumbs, Boundary, Spinner, Intent, Alert } from "@blueprintjs/core";
+import { Popover, IBreadcrumbProps, Card, Elevation, Breadcrumbs, Boundary, Spinner, Intent, Alert, Button, Menu, MenuItem, MenuDivider } from "@blueprintjs/core";
 import { useParams } from 'react-router-dom';
-import { getFiles} from '../api'
+import { getFileDownloadUrl, getFiles, getFileViewUrl } from '../api'
 import { FileInfo, FileType } from '../types'
-import {useI18n} from '../hooks'
+import { useI18n } from '../hooks'
 interface FileParms {
     baseId: string,
     id: string
@@ -18,13 +18,35 @@ interface FileTableProps {
 interface FileSizeProps {
     size: number
 }
+
+function FileOperations({ file }: { file: FileInfo }) {
+    const { message } = useI18n();
+    if (file.type == FileType.Directory) {
+        return (
+            null
+        )
+    } else {
+        const menu = (
+            <Menu>               
+                <MenuItem icon="info-sign" text={`${message['filesize']}: ${getFileSize(file)}`}  />
+                <MenuItem icon="download" text={message["download"]} onClick={(e: React.MouseEvent<HTMLElement>) => { window.open(getFileDownloadUrl(file), '_blank'); }} />
+            </Menu>
+        )
+        return (
+            <Popover content={menu} placement="right-end">
+                <Button icon="more" />
+            </Popover>
+        )
+    }
+}
+
 function FilesTable(props: FileTableProps) {
     const router = useRouter();
-    function fileItemClicked(item: FileInfo) {
+    function fileItemClicked(e: React.MouseEvent<HTMLElement>, item: FileInfo) {
         if (item.type === FileType.Directory) {
             router.push(`/files/${item.baseId}/${item.id}`);
         } else {
-
+            window.open(getFileViewUrl(item), '_blank')
         }
     }
     if (props.loading) {
@@ -33,25 +55,26 @@ function FilesTable(props: FileTableProps) {
         return (
             <React.Fragment>
                 {props.children.map((file: FileInfo) =>
-                    <Card interactive={true} elevation={Elevation.TWO} key={file.id}>
-                        <div className="grid" onClick={() => fileItemClicked(file)}>
+                    <Card interactive={true} elevation={Elevation.ONE} key={file.id}>
+                        <div className="grid fileline" onClick={(e: React.MouseEvent<HTMLElement>) => fileItemClicked(e, file)}>
                             <div className="grid-cell u3">
-                                {renderFileImage(file.ext, file.type === FileType.Directory,file.name)}
+                                {renderFileImage(file.ext, file.type === FileType.Directory, file.name)}
                             </div>
-                            <div className="grid-cell u17">
+                            <div className="grid-cell u17" style={{justifyContent:"left"}}>
                                 <span className="filename">{file.name}</span>
                             </div>
-                            <div className="grid-cell u4">
-                                <FileSize size={file.size} />
+                            <div className="grid-cell u4" onClick={(e) => { e.stopPropagation(); }}>
+                                <FileOperations file={file} />
                             </div>
                         </div>
                     </Card>
+
                 )}
             </React.Fragment>
         );
     }
 }
-function FileSize({ size }: FileSizeProps) {
+function getFileSize({ size }: FileSizeProps):string {
     if (size > 0) {
         const sizeName = ["b", "KB", "MB", "GB", "TB"];
         let num = 0;
@@ -63,12 +86,12 @@ function FileSize({ size }: FileSizeProps) {
             num = 1;
             size = 1;
         }
-        return <span className="filesize">{Math.round(size * 100) / 100 + " " + sizeName[num]}</span>;
+        return Math.round(size * 10) / 10 + " " + sizeName[num];
     } else {
-        return <span className="filesize"></span>;
+        return '';
     }
 }
-function renderFileImage(type: string, isDirectory: boolean,name:string) {
+function renderFileImage(type: string, isDirectory: boolean, name: string) {
     let icon = FileIcons.file;
     if (isDirectory) {
         icon = FileIcons.folder;
@@ -101,7 +124,7 @@ function renderFileImage(type: string, isDirectory: boolean,name:string) {
             icon = FileIcons.zip
         }
     }
-    return <img src={icon} className="fileicon" alt={name}/>
+    return <img src={icon} className="fileicon" alt={name} />
 }
 
 export default function Files() {
@@ -112,9 +135,9 @@ export default function Files() {
         loading: false,
         children: []
     })
-    const {message} = useI18n();
+    const { message } = useI18n();
     async function fetchFiles() {
-        try{
+        try {
             let res = await getFiles(parm.baseId, parm.id);
             setData({
                 loading: false,
@@ -126,17 +149,17 @@ export default function Files() {
             })
             setBreadItems([{ icon: "folder-open", text: res.cwd.name, current: true }])
         }
-        catch(err){
+        catch (err) {
             console.log(err)
-                console.log(typeof err)
-                setError({
-                    error: true,
-                    errorMessage: err
-                })
-                setData({
-                    loading: false,
-                    children: []
-                })
+            console.log(typeof err)
+            setError({
+                error: true,
+                errorMessage: err
+            })
+            setData({
+                loading: false,
+                children: []
+            })
         }
     }
     useEffect(() => {
@@ -146,7 +169,7 @@ export default function Files() {
                 children: d.children
             }
         });
-        fetchFiles();      
+        fetchFiles();
     }, [parm.baseId, parm.id])
     console.log(message)
     return (

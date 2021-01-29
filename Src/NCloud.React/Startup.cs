@@ -124,6 +124,7 @@ namespace NCloud.React
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
             app.UseSpa(spa =>
             {

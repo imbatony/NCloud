@@ -1,4 +1,4 @@
-import { RestResult, RootConfig, ListFileInfo, defaultLocal } from '../types'
+import { RestResult, RootConfig, ListFileInfo, defaultLocal, FileInfo } from '../types'
 function get<T>(url: string, mockData?: T): Promise<T> {
     const lang = localStorage.getItem('local') || defaultLocal;
     const requestHeaders: HeadersInit = new Headers();
@@ -40,4 +40,11 @@ export async function getRoot(): Promise<RootConfig> {
 }
 export function getFiles(baseId: string, id: string) {
     return get<ListFileInfo>(`/api/file/files/${baseId}/${id}`);
+}
+
+export function getFileViewUrl(item: FileInfo) {
+    return `/RawFile?baseId=${item.baseId}&id=${item.id}`;
+}
+export function getFileDownloadUrl(item: FileInfo) {
+    return `/RawFile?baseId=${item.baseId}&id=${item.id}&download=true`;
 }
