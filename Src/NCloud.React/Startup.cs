@@ -49,7 +49,7 @@ namespace NCloud.React
             services.AddConfigurableOptions<RootDriverOptions>();
             services.AddDataProtection();
             services.AddSingleton<ISystemHelper, SystemHelper>();
-            services.AddSingleton<IFileIdGenerator, Base16FileIdGenerator>();
+            services.AddSingleton<IFileIdGenerator, Base64IdGenerator>();
             services.AddSingleton<IFileManagerProvider, RootFileManagerProvider>();
             services.AddSingleton<IFileManagerProvider, LocalFileManagerProvider>();
             services.AddSingleton<IFileManagerFactory, DefaultFileManagerFactory>(p =>
