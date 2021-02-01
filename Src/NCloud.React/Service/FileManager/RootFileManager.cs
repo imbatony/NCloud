@@ -60,16 +60,6 @@
         }
 
         /// <summary>
-        /// The GetDownloadUrlById.
-        /// </summary>
-        /// <param name="id">The id<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        public string GetDownloadUrlById(string id)
-        {
-            throw Oops.Oh(10005);
-        }
-
-        /// <summary>
         /// The GetFileById.
         /// </summary>
         /// <param name="id">The id<see cref="string"/>.</param>
