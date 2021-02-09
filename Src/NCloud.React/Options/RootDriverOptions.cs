@@ -1,7 +1,6 @@
 ﻿namespace NCloud.React.Options
 {
     using Furion.ConfigurableOptions;
-    using NCloud.React.Service.FileManager;
 
     /// <summary>
     /// Defines the <see cref="RootDriverOptions" />.
@@ -11,6 +10,6 @@
         /// <summary>
         /// Gets or sets the Url.
         /// </summary>
-        public string Url { get; set; } = "root://root";
+        public string Url { get; set; } = "virtual://root";
     }
 }

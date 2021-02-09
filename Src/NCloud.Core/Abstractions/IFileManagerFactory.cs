@@ -17,5 +17,12 @@
         /// </summary>
         /// <param name="driver">The driver<see cref="IFileManagerProvider"/>.</param>
         public void AddProvider(IFileManagerProvider driver);
+
+        /// <summary>
+        /// The GetProviderByType.
+        /// </summary>
+        /// <param name="type">The type<see cref="string"/>.</param>
+        /// <returns>The <see cref="IFileManagerProvider"/>.</returns>
+        public IFileManagerProvider GetProviderByType(string type);
     }
 }

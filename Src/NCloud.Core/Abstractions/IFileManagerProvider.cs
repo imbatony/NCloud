@@ -1,5 +1,8 @@
 ﻿namespace NCloud.Core.Abstractions
 {
+    using System.Net.Http;
+    using NCloud.Core.Utils;
+
     /// <summary>
     /// Defines the <see cref="IFileManagerProvider" />.
     /// </summary>
@@ -17,6 +20,22 @@
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
         /// <returns>The <see cref="bool"/>.</returns>
-        bool IsSupport(string url);
+        public bool IsSupport(string url)
+        {
+            return UrlUtils.GetHost(url) == GetType();
+        }
+
+        /// <summary>
+        /// The GetType.
+        /// </summary>
+        /// <returns>The <see cref="string"/>.</returns>
+        string GetType();
+
+        /// <summary>
+        /// The ToConfigUrl.
+        /// </summary>
+        /// <param name="message">The message<see cref="HttpRequestMessage"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        string ToConfigUrl(HttpRequestMessage message);
     }
 }

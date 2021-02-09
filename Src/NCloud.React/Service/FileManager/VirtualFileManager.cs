@@ -7,9 +7,9 @@
     using NCloud.Core.Model;
 
     /// <summary>
-    /// Defines the <see cref="RootFileManager" />.
+    /// Defines the <see cref="VirtualFileManager" />.
     /// </summary>
-    public class RootFileManager : IFileManager
+    public class VirtualFileManager : IFileManager
     {
         /// <summary>
         /// Defines the fileInfos.
@@ -37,11 +37,11 @@
         private readonly ISystemHelper systemHelper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RootFileManager"/> class.
+        /// Initializes a new instance of the <see cref="VirtualFileManager"/> class.
         /// </summary>
         /// <param name="name">The name<see cref="string"/>.</param>
         /// <param name="systemHelper">systemHelper.</param>
-        public RootFileManager(string name, ISystemHelper systemHelper)
+        public VirtualFileManager(string name, ISystemHelper systemHelper)
         {
             this.fileInfos = new List<NCloudFileInfo>();
             this.name = name;

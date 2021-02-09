@@ -11,7 +11,7 @@
     public class DefaultFileManagerFactory : IFileManagerFactory
     {
         /// <summary>
-        /// Defines the drivers.
+        /// Defines the providers.
         /// </summary>
         private readonly List<IFileManagerProvider> providers;
 
@@ -21,7 +21,7 @@
         private readonly Dictionary<string, IFileManager> fileManagers;
 
         /// <summary>
-        /// Defines the fileIdGenerator.
+        /// Defines the systemHelper.
         /// </summary>
         private readonly ISystemHelper systemHelper;
 
@@ -67,6 +67,16 @@
                 this.fileManagers[baseId] = manager;
                 return manager;
             }
+        }
+
+        /// <summary>
+        /// The GetProviderByType.
+        /// </summary>
+        /// <param name="type">The type<see cref="string"/>.</param>
+        /// <returns>The <see cref="IFileManagerProvider"/>.</returns>
+        public IFileManagerProvider GetProviderByType(string type)
+        {
+            return this.providers.Where(e => e.GetType() == type).First();
         }
 
         /// <summary>

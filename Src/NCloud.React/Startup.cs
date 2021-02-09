@@ -50,7 +50,7 @@ namespace NCloud.React
             services.AddDataProtection();
             services.AddSingleton<ISystemHelper, SystemHelper>();
             services.AddSingleton<IFileIdGenerator, Base64IdGenerator>();
-            services.AddSingleton<IFileManagerProvider, RootFileManagerProvider>();
+            services.AddSingleton<IFileManagerProvider, VirtualFileManagerProvider>();
             services.AddSingleton<IFileManagerProvider, LocalFileManagerProvider>();
             services.AddSingleton<IFileManagerFactory, DefaultFileManagerFactory>(p =>
               {
@@ -59,7 +59,7 @@ namespace NCloud.React
                   factory.GetFileManager(systemHelper.GetRootBaseId());
                   if (env.IsDevelopment())
                   {
-                      RootFileManager root = (RootFileManager)factory.GetFileManager(systemHelper.GetRootBaseId());
+                      VirtualFileManager root = (VirtualFileManager)factory.GetFileManager(systemHelper.GetRootBaseId());
                       var op = App.GetOptions<DevelopInitFilesOptions>();
                       foreach (var url in op.Urls)
                       {

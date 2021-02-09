@@ -1,5 +1,7 @@
 ﻿namespace NCloud.React.Service.FileManager
 {
+    using System.Net.Http;
+    using System.Net.Http.Json;
     using Furion.FriendlyException;
     using Microsoft.Extensions.Logging;
     using NCloud.Core.Abstractions;
@@ -10,6 +12,11 @@
     /// </summary>
     public class LocalFileManagerProvider : IFileManagerProvider
     {
+        /// <summary>
+        /// Defines the TYPE.
+        /// </summary>
+        private const string TYPE = "local";
+
         /// <summary>
         /// Defines the helper.
         /// </summary>
@@ -50,7 +57,7 @@
         /// <returns>The <see cref="IFileManager"/>.</returns>
         public IFileManager GreateFileManager(string url)
         {
-            if (!IsSupport(url))
+            if (!((IFileManagerProvider)this).IsSupport(url))
             {
                 throw Oops.Oh(10001, url);
             }
@@ -61,13 +68,34 @@
         }
 
         /// <summary>
-        /// The IsSupport.
+        /// The ToConfigUrl.
         /// </summary>
-        /// <param name="url">The url<see cref="string"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public bool IsSupport(string url)
+        /// <param name="message">The message<see cref="HttpRequestMessage"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string ToConfigUrl(HttpRequestMessage message)
         {
-            return "local" == UrlUtils.GetUrlSchema(url);
+            var config = message.Content.ReadFromJsonAsync<LocalFileManagerConfig>().Result;
+            return UrlUtils.CreateUrl(TYPE, config.Name);
+        }
+
+        /// <summary>
+        /// The GetType.
+        /// </summary>
+        /// <returns>The <see cref="string"/>.</returns>
+        string IFileManagerProvider.GetType()
+        {
+            return TYPE;
+        }
+
+        /// <summary>
+        /// Defines the <see cref="LocalFileManagerConfig" />.
+        /// </summary>
+        public class LocalFileManagerConfig
+        {
+            /// <summary>
+            /// Gets or sets the Name.
+            /// </summary>
+            public string Name { get; set; }
         }
     }
 }
