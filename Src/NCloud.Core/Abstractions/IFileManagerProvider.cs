@@ -22,7 +22,7 @@
         /// <returns>The <see cref="bool"/>.</returns>
         public bool IsSupport(string url)
         {
-            return UrlUtils.GetHost(url) == GetType();
+            return UrlUtils.GetUrlSchema(url) == GetType();
         }
 
         /// <summary>

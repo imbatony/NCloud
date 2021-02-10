@@ -15,8 +15,8 @@
         /// <summary>
         /// The AddDriver.
         /// </summary>
-        /// <param name="driver">The driver<see cref="IFileManagerProvider"/>.</param>
-        public void AddProvider(IFileManagerProvider driver);
+        /// <param name="provider">The provider<see cref="IFileManagerProvider"/>.</param>
+        public void AddProvider(IFileManagerProvider provider);
 
         /// <summary>
         /// The GetProviderByType.
