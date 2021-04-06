@@ -25,18 +25,25 @@
         public string CreateFileManagerBaseId(string url);
 
         /// <summary>
-        /// The GetFileManagerDisplayName.
+        /// The GetParentId.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
         /// <returns>The <see cref="string"/>.</returns>
-        public string GetFileManagerDisplayName(string url);
+        public string GetParentId(string url);
+
+        /// <summary>
+        /// The GetParentBaseId.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string GetParentBaseId(string url);
 
         /// <summary>
         /// The GetFileManagerDisplayName.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
         /// <returns>The <see cref="string"/>.</returns>
-        public string GetFileManagerRootPath(string url);
+        public string GetFileManagerDisplayName(string url);
 
         /// <summary>
         /// The GetFileIdByPath.

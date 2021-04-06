@@ -13,6 +13,13 @@
         public IFileManager GetFileManager(string baseId);
 
         /// <summary>
+        /// The GetFileManagerByUrl.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="IFileManager"/>.</returns>
+        public IFileManager GetFileManagerByUrl(string url);
+
+        /// <summary>
         /// The AddDriver.
         /// </summary>
         /// <param name="provider">The provider<see cref="IFileManagerProvider"/>.</param>

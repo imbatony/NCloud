@@ -12,8 +12,16 @@
         /// The GetFileManager.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
+        /// <param name="id">The id<see cref="string"/>.</param>
         /// <returns>The <see cref="IFileManager"/>.</returns>
-        IFileManager GreateFileManager(string url);
+        IFileManager GreateFileManager(string url, out string id);
+
+        /// <summary>
+        /// The GetFileMangerBaseIdByUrl.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        string GetFileMangerBaseIdByUrl(string url);
 
         /// <summary>
         /// The IsSupport.

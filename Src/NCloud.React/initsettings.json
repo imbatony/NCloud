@@ -1,5 +1,5 @@
 ﻿{
-  "DevelopInitFiles": {
+  "InitFiles": {
     "Urls": [
       "local://我的目录?root=$USER_ROOT"
     ]

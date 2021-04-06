@@ -4,9 +4,9 @@
     using Furion.ConfigurableOptions;
 
     /// <summary>
-    /// Defines the <see cref="DevelopInitFilesOptions" />.
+    /// Defines the <see cref="InitFilesOptions" />.
     /// </summary>
-    public class DevelopInitFilesOptions : IConfigurableOptions
+    public class InitFilesOptions : IConfigurableOptions
     {
         /// <summary>
         /// Gets or sets the Urls.

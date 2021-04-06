@@ -1,7 +1,7 @@
 ﻿namespace NCloud.Core.Abstractions
 {
-    using NCloud.Core.Model;
     using System.Collections.Generic;
+    using NCloud.Core.Model;
 
     /// <summary>
     /// Defines the <see cref="IFileManager" />.
@@ -29,13 +29,19 @@
         public string GetRootId();
 
         /// <summary>
+        /// The GetRootId.
+        /// </summary>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string GetBaseId();
+
+        /// <summary>
         /// The GetSupportExtraFileOperations.
         /// </summary>
         /// <returns>The <see cref="FileOperations[]"/>.</returns>
         sealed public List<FileOperations> GetSupportExtraFileOperations()
         {
             List<FileOperations> list = new List<FileOperations>();
-            if(this is IStreamable)
+            if (this is IStreamable)
             {
                 list.Add(FileOperations.Stream);
             }
@@ -45,9 +51,11 @@
             }
             return list;
         }
+
         /// <summary>
         /// The GetSupportExtraFileOperations.
         /// </summary>
+        /// <param name="operations">The operations<see cref="FileOperations"/>.</param>
         /// <returns>The <see cref="FileOperations[]"/>.</returns>
         sealed public bool IsSupport(FileOperations operations)
         {
@@ -68,8 +76,19 @@
     /// </summary>
     public enum FileOperations
     {
+        /// <summary>
+        /// Defines the Upload.
+        /// </summary>
         Upload,
+
+        /// <summary>
+        /// Defines the Stream.
+        /// </summary>
         Stream,
+
+        /// <summary>
+        /// Defines the Redirect.
+        /// </summary>
         Redirect
     }
 }

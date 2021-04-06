@@ -22,17 +22,27 @@
         private readonly string name;
 
         /// <summary>
+        /// Defines the parentId.
+        /// </summary>
+        private readonly string parentId;
+
+        /// <summary>
+        /// Defines the baseId.
+        /// </summary>
+        private readonly string baseId;
+
+        /// <summary>
         /// Defines the rootId.
         /// </summary>
         private readonly string rootId;
 
         /// <summary>
-        /// Defines the rootBaseId.
+        /// Defines the parentBaseId.
         /// </summary>
-        private readonly string rootBaseId;
+        private readonly string parentBaseId;
 
         /// <summary>
-        /// Defines the fileIdGenerator.
+        /// Defines the systemHelper.
         /// </summary>
         private readonly ISystemHelper systemHelper;
 
@@ -41,22 +51,46 @@
         /// </summary>
         /// <param name="name">The name<see cref="string"/>.</param>
         /// <param name="systemHelper">systemHelper.</param>
-        public VirtualFileManager(string name, ISystemHelper systemHelper)
+        /// <param name="parentBaseId">The parentBaseId<see cref="string"/>.</param>
+        /// <param name="parentId">The parentId<see cref="string"/>.</param>
+        /// <param name="baseId">The baseId<see cref="string"/>.</param>
+        /// <param name="rootId">The rootId<see cref="string"/>.</param>
+        public VirtualFileManager(string name, ISystemHelper systemHelper, string parentBaseId, string parentId, string baseId, string rootId)
         {
             this.fileInfos = new List<NCloudFileInfo>();
             this.name = name;
-            this.rootId = systemHelper.GetRootId();
-            this.rootBaseId = systemHelper.GetRootBaseId();
+            this.parentId = parentId;
+            this.baseId = baseId;
+            this.rootId = rootId;
+            this.parentBaseId = parentBaseId;
             this.systemHelper = systemHelper;
         }
 
         /// <summary>
         /// The Add.
         /// </summary>
-        /// <param name="info">The info<see cref="NCloudFileInfo"/>.</param>
-        public void Add(NCloudFileInfo info)
+        /// <param name="manager">The manager<see cref="IFileManager"/>.</param>
+        public void AddChildManager(IFileManager manager)
         {
-            this.fileInfos.Add(info);
+            var rootId = manager.GetRootId();
+            this.fileInfos.Add(manager.GetFileById(rootId));
+        }
+
+        /// <summary>
+        /// The Clear.
+        /// </summary>
+        public void Clear()
+        {
+            this.fileInfos.Clear();
+        }
+
+        /// <summary>
+        /// The GetBaseId.
+        /// </summary>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string GetBaseId()
+        {
+            return this.baseId;
         }
 
         /// <summary>
@@ -66,21 +100,21 @@
         /// <returns>The <see cref="NCloudFileInfo"/>.</returns>
         public NCloudFileInfo GetFileById(string id = null)
         {
-            if (string.IsNullOrEmpty(id) || systemHelper.IsIdEqual(id, this.GetRootId()))
+            if (systemHelper.IsIdEqual(id, this.GetRootId()))
             {
                 return new NCloudFileInfo
                 {
                     Name = this.name,
                     Type = NCloudFileInfo.FileType.Directory,
-                    Id = this.rootId,
-                    ParentId = this.rootId,
-                    BaseId = this.rootBaseId,
-                    ParentBaseId = this.rootBaseId
+                    Id = this.GetRootId(),
+                    ParentId = this.parentId,
+                    BaseId = this.baseId,
+                    ParentBaseId = this.parentBaseId
                 };
             }
             else
             {
-                return this.fileInfos.Where(f => systemHelper.IsIdEqual(f.Id, id)).FirstOrDefault() ?? throw Oops.Oh(10002); 
+                return this.fileInfos.Where(f => systemHelper.IsIdEqual(f.Id, id)).FirstOrDefault() ?? throw Oops.Oh(10002);
             }
         }
 

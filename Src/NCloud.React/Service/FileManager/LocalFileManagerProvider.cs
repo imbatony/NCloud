@@ -28,16 +28,6 @@
         private readonly ILogger<LocalFileManager> logger;
 
         /// <summary>
-        /// Defines the parentId.
-        /// </summary>
-        private readonly string parentId;
-
-        /// <summary>
-        /// Defines the parentBaseId.
-        /// </summary>
-        private readonly string parentBaseId;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="LocalFileManagerProvider"/> class.
         /// </summary>
         /// <param name="helper">The driver<see cref="ISystemHelper"/>.</param>
@@ -46,25 +36,34 @@
         {
             this.helper = helper;
             this.logger = logger;
-            this.parentId = helper.GetRootId();
-            this.parentBaseId = helper.GetRootBaseId();
+        }
+
+        /// <summary>
+        /// The GetFileMangerBaseIdByUrl.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string GetFileMangerBaseIdByUrl(string url)
+        {
+            return helper.CreateFileManagerBaseId(url);
         }
 
         /// <summary>
         /// The GreateFileManager.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
+        /// <param name="id">The id<see cref="string"/>.</param>
         /// <returns>The <see cref="IFileManager"/>.</returns>
-        public IFileManager GreateFileManager(string url)
+        public IFileManager GreateFileManager(string url, out string id)
         {
             if (!((IFileManagerProvider)this).IsSupport(url))
             {
                 throw Oops.Oh(10001, url);
             }
-            var baseId = helper.CreateFileManagerBaseId(url);
-            var rootPath = helper.GetFileManagerRootPath(url);
+            id = helper.CreateFileManagerBaseId(url);
+            var rootPath = UrlUtils.GetParam(url, "root"); 
             var displayName = helper.GetFileManagerDisplayName(url);
-            return new LocalFileManager(helper, rootPath, displayName, baseId, this.parentBaseId, this.parentId, this.logger);
+            return new LocalFileManager(helper, rootPath, displayName, id, helper.GetParentBaseId(url), helper.GetParentId(url), this.logger);
         }
 
         /// <summary>

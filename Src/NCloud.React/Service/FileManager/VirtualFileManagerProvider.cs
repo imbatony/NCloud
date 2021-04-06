@@ -30,13 +30,25 @@
         }
 
         /// <summary>
+        /// The GetFileMangerBaseIdByUrl.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string GetFileMangerBaseIdByUrl(string url)
+        {
+            return helper.CreateFileManagerBaseId(url);
+        }
+
+        /// <summary>
         /// The GetFileManager.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
+        /// <param name="id">The id<see cref="string"/>.</param>
         /// <returns>The <see cref="IFileManager"/>.</returns>
-        public IFileManager GreateFileManager(string url)
+        public IFileManager GreateFileManager(string url, out string id)
         {
-            return new VirtualFileManager(helper.GetFileManagerDisplayName(url), helper);
+            id = helper.CreateFileManagerBaseId(url);
+            return new VirtualFileManager(helper.GetFileManagerDisplayName(url), helper, helper.GetParentBaseId(url), helper.GetParentId(url), id, helper.GetRootId());
         }
 
         /// <summary>

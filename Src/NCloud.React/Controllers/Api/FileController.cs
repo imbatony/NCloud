@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using NCloud.Core.Abstractions;
     using NCloud.React.Model.Response;
+    using NCloud.React.Service;
 
     /// <summary>
     /// 文件操作API.
@@ -21,14 +22,21 @@
         private readonly ISystemHelper systemHelper;
 
         /// <summary>
+        /// Defines the rootManagerInitializer.
+        /// </summary>
+        private readonly RootManagerInitializer rootManagerInitializer;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FileController"/> class.
         /// </summary>
         /// <param name="factory">The factory<see cref="IFileManagerFactory"/>.</param>
         /// <param name="systemHelper">The fileIdGenerator<see cref="ISystemHelper"/>.</param>
-        public FileController(IFileManagerFactory factory, ISystemHelper systemHelper)
+        /// <param name="rootManagerInitializer">The rootManagerInitializer<see cref="RootManagerInitializer"/>.</param>
+        public FileController(IFileManagerFactory factory, ISystemHelper systemHelper, RootManagerInitializer rootManagerInitializer)
         {
             this.factory = factory;
             this.systemHelper = systemHelper;
+            this.rootManagerInitializer = rootManagerInitializer;
         }
 
         /// <summary>

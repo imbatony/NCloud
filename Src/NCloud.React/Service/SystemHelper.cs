@@ -56,10 +56,7 @@
         /// <returns>The <see cref="string"/>.</returns>
         public string CreateFileManagerBaseId(string url)
         {
-            string schema = UrlUtils.GetUrlSchema(url);
-            string name = UrlUtils.GetHost(url);
-            var key = $"{schema}://{name}";
-            return this.fileIdGenerator.EncodedPath(key);
+            return this.fileIdGenerator.EncodedPath(url);
         }
 
         /// <summary>
@@ -72,16 +69,6 @@
             var name = UrlUtils.GetHost(url);
             var displayName = UrlUtils.GetParam(url, "displayName") ?? name;
             return displayName;
-        }
-
-        /// <summary>
-        /// The GetFileManagerDisplayName.
-        /// </summary>
-        /// <param name="url">The url<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        public string GetFileManagerRootPath(string url)
-        {
-            return UrlUtils.GetParam(url, "root");
         }
 
         /// <summary>
@@ -113,6 +100,16 @@
         public bool IsIdEqual(string id1, string id2)
         {
             return this.fileIdGenerator.IsEqual(id1, id2);
+        }
+
+        public string GetParentId(string url)
+        {
+            return UrlUtils.GetParam(url, "parentId") ?? GetRootId();
+        }
+
+        public string GetParentBaseId(string url)
+        {
+            return UrlUtils.GetParam(url, "parentBaseId") ?? GetRootBaseId();
         }
     }
 }

@@ -74,6 +74,11 @@
             this.logger.LogInformation($"Loading rootPath:{rootPath} name:{name} baseId:{baseId}");
         }
 
+        public string GetBaseId()
+        {
+            return this.GetBaseId();
+        }
+
         /// <summary>
         /// The GetDownloadUrl.
         /// </summary>

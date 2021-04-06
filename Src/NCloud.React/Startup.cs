@@ -45,38 +45,16 @@ namespace NCloud.React
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddConfigurableOptions<DevelopInitFilesOptions>();
+            services.AddConfigurableOptions<InitFilesOptions>();
             services.AddConfigurableOptions<RootDriverOptions>();
             services.AddDataProtection();
             services.AddSingleton<ISystemHelper, SystemHelper>();
             services.AddSingleton<IFileIdGenerator, Base64IdGenerator>();
             services.AddSingleton<IFileManagerProvider, VirtualFileManagerProvider>();
             services.AddSingleton<IFileManagerProvider, LocalFileManagerProvider>();
-            services.AddSingleton<IFileManagerFactory, DefaultFileManagerFactory>(p =>
-              {
-                  var systemHelper = p.GetService<ISystemHelper>();
-                  var factory = new DefaultFileManagerFactory(p.GetServices<IFileManagerProvider>().ToList(), systemHelper);
-                  factory.GetFileManager(systemHelper.GetRootBaseId());
-                  if (env.IsDevelopment())
-                  {
-                      VirtualFileManager root = (VirtualFileManager)factory.GetFileManager(systemHelper.GetRootBaseId());
-                      var op = App.GetOptions<DevelopInitFilesOptions>();
-                      foreach (var url in op.Urls)
-                      {
-                          var fileManager = factory.GetFileManagerByUrl(url);
-                          var rootFileInfo = fileManager.GetFileById();
-                          root.Add(rootFileInfo);
-                      }
-                  }
-                  return factory;
-              });
-            //services.AddCors(option => option.AddPolicy("cors",
-            //    policy => policy
-            //    .AllowAnyHeader()
-            //    .AllowAnyMethod()
-            //    .AllowCredentials()
-            //    .WithOrigins(
-            //      "https://localhost:6001")));
+            services.AddSingleton<IFileManagerFactory, DefaultFileManagerFactory>();
+            services.AddSingleton<RootManagerInitializer>();
+
             services.AddControllersWithViews()
                 .AddAppLocalization()
                 .AddInjectWithUnifyResult<RESTfulResultProvider>();
