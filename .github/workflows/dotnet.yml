@@ -19,6 +19,8 @@ jobs:
         dotnet-version: '5.0.x'
     - name: Restore dependencies
       run: dotnet restore ./Src
+    - name: Restore dependencies
+      run: dotnet restore ./Plugins
     - name: Build
       run: dotnet build ./Src --no-restore
     - name: Test
