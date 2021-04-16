@@ -20,7 +20,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./Src
     - name: Restore dependencies
-      run: dotnet restore ./Plugins
+      run: dotnet restore ./Plugins/**/*.csproj
     - name: Build
       run: dotnet build ./Src --no-restore
     - name: Test
