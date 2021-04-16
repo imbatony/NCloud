@@ -30,7 +30,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Plugins\NCloud.Plugins.Github\NCloud.Plugins.GitHub.csproj" />
+    <ProjectReference Include="..\Plugins\NCloud.Plugins.GitHub\NCloud.Plugins.GitHub.csproj" />
     <ProjectReference Include="..\NCloud.Core\NCloud.Core.csproj" />
   </ItemGroup>
 
