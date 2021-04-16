@@ -19,6 +19,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Prise" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +30,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\..\Plugins\NCloud.Plugins.Github\NCloud.Plugins.GitHub.csproj" />
     <ProjectReference Include="..\NCloud.Core\NCloud.Core.csproj" />
   </ItemGroup>
 
@@ -39,7 +41,7 @@
     </Exec>
     <Error Condition="'$(ErrorCode)' != '0'" Text="Yarn is required to build and run this project." />
     <Message Importance="high" Text="Restoring dependencies using 'yarn'. This may take several minutes..." />
-    <Exec WorkingDirectory="react-app\" Command="yarn install" />
+    <Exec WorkingDirectory="react-app\" Command="yarn install" /> 
   </Target>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">

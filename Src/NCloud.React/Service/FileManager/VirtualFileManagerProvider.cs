@@ -40,6 +40,15 @@
         }
 
         /// <summary>
+        /// The GetSupportType.
+        /// </summary>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string GetSupportType()
+        {
+            return TYPE;
+        }
+
+        /// <summary>
         /// The GetFileManager.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
@@ -52,6 +61,16 @@
         }
 
         /// <summary>
+        /// The IsSupport.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        public bool IsSupport(string url)
+        {
+            return UrlUtils.GetUrlSchema(url) == GetSupportType();
+        }
+
+        /// <summary>
         /// The ToConfigUrl.
         /// </summary>
         /// <param name="message">The message<see cref="HttpRequestMessage"/>.</param>
@@ -60,15 +79,6 @@
         {
             var config = message.Content.ReadFromJsonAsync<VirtualFileManagerConfig>().Result;
             return UrlUtils.CreateUrl(TYPE, config.Name);
-        }
-
-        /// <summary>
-        /// The GetType.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
-        string IFileManagerProvider.GetType()
-        {
-            return TYPE;
         }
 
         /// <summary>

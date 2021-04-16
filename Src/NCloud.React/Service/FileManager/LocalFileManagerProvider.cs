@@ -2,7 +2,6 @@
 {
     using System.Net.Http;
     using System.Net.Http.Json;
-    using Furion.FriendlyException;
     using Microsoft.Extensions.Logging;
     using NCloud.Core.Abstractions;
     using NCloud.Core.Utils;
@@ -12,11 +11,6 @@
     /// </summary>
     public class LocalFileManagerProvider : IFileManagerProvider
     {
-        /// <summary>
-        /// Defines the TYPE.
-        /// </summary>
-        private const string TYPE = "local";
-
         /// <summary>
         /// Defines the helper.
         /// </summary>
@@ -49,6 +43,15 @@
         }
 
         /// <summary>
+        /// The GetSupportType.
+        /// </summary>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string GetSupportType()
+        {
+            return "local";
+        }
+
+        /// <summary>
         /// The GreateFileManager.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
@@ -58,12 +61,24 @@
         {
             if (!((IFileManagerProvider)this).IsSupport(url))
             {
-                throw Oops.Oh(10001, url);
+                helper.RaiseError(Core.Enum.ErrorEnum.Invalid_Path, url);
+                id = string.Empty;
+                return null;
             }
             id = helper.CreateFileManagerBaseId(url);
-            var rootPath = UrlUtils.GetParam(url, "root"); 
+            var rootPath = UrlUtils.GetParam(url, "root");
             var displayName = helper.GetFileManagerDisplayName(url);
             return new LocalFileManager(helper, rootPath, displayName, id, helper.GetParentBaseId(url), helper.GetParentId(url), this.logger);
+        }
+
+        /// <summary>
+        /// The IsSupport.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        public bool IsSupport(string url)
+        {
+            return UrlUtils.GetUrlSchema(url) == GetSupportType();
         }
 
         /// <summary>
@@ -74,16 +89,7 @@
         public string ToConfigUrl(HttpRequestMessage message)
         {
             var config = message.Content.ReadFromJsonAsync<LocalFileManagerConfig>().Result;
-            return UrlUtils.CreateUrl(TYPE, config.Name);
-        }
-
-        /// <summary>
-        /// The GetType.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
-        string IFileManagerProvider.GetType()
-        {
-            return TYPE;
+            return UrlUtils.CreateUrl("local", config.Name);
         }
 
         /// <summary>

@@ -55,7 +55,7 @@
         /// <summary>
         /// Gets or sets the Type.
         /// </summary>
-        public FileType Type { get; set; }
+        public FileType Type { get; set; } = FileType.Directory;
 
         /// <summary>
         /// Defines the FileType.

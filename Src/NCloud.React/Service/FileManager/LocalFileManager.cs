@@ -101,10 +101,11 @@
                 fileId = GetRootId();
             }
             string filePath = helper.GetFilePathById(fileId);
+            NCloudFileInfo fileInfo = null;
             if (File.Exists(filePath))
             {
-                FileInfo f = new FileInfo(filePath);
-                var fileInfo = new NCloudFileInfo
+                var f = new FileInfo(filePath);
+                fileInfo = new NCloudFileInfo
                 {
                     CreateTime = f.CreationTime,
                     UpdateTime = f.LastWriteTime,
@@ -118,13 +119,12 @@
                     ParentBaseId = this.baseId,
 
                 };
-                return fileInfo;
             }
             else if (Directory.Exists(filePath))
             {
                 bool isRoot = (fileId == this.GetRootId());
                 DirectoryInfo f = new DirectoryInfo(filePath);
-                var fileInfo = new NCloudFileInfo
+                fileInfo = new NCloudFileInfo
                 {
                     CreateTime = f.CreationTime,
                     UpdateTime = f.LastWriteTime,
@@ -137,9 +137,12 @@
                     BaseId = this.baseId,
                     ParentBaseId = isRoot ? this.parentBaseId : this.baseId
                 };
-                return fileInfo;
             }
-            throw Oops.Oh(10002);
+            else
+            {
+                throw this.helper.RaiseError(Core.Enum.ErrorEnum.File_Not_Found);
+            }
+            return fileInfo;
         }
 
         /// <summary>
@@ -158,7 +161,7 @@
             string filePath = helper.GetFilePathById(fileId);
             if (Directory.Exists(filePath))
             {
-                DirectoryInfo di = new DirectoryInfo(filePath);
+                var di = new DirectoryInfo(filePath);
                 try
                 {
                     var files = di.GetFileSystemInfos();
@@ -168,7 +171,7 @@
                         {
                             CreateTime = f.CreationTime,
                             UpdateTime = f.LastWriteTime,
-                            Ext = string.IsNullOrEmpty(f.Extension) ? string.Empty : f.Extension.ToLower().Substring(1),
+                            Ext = string.IsNullOrEmpty(f.Extension) ? string.Empty : f.Extension.ToLower()[1..],
                             Name = f.Name,
                             BaseId = this.baseId,
                             ParentBaseId = isRoot ? this.parentBaseId : this.baseId,
@@ -193,12 +196,12 @@
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    throw Oops.Oh(10007);
+                    throw helper.RaiseError(Core.Enum.ErrorEnum.Path_Unauthorized);
                 }
             }
             else
             {
-                throw Oops.Oh(10002);
+                throw helper.RaiseError(Core.Enum.ErrorEnum.File_Not_Found);
             }
         }
 
@@ -211,7 +214,7 @@
         {
             if (fileInfo.Type == NCloudFileInfo.FileType.Directory)
             {
-                throw Oops.Oh(10005);
+                this.helper.RaiseError(Core.Enum.ErrorEnum.File_Opt_Forbidden);
             }
             var path = this.helper.GetFilePathById(fileInfo.Id);
             return File.OpenRead(path);

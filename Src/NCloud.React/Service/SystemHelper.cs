@@ -1,7 +1,10 @@
 ﻿namespace NCloud.React.Service
 {
+    using System;
+    using Furion.FriendlyException;
     using Microsoft.Extensions.Options;
     using NCloud.Core.Abstractions;
+    using NCloud.Core.Enum;
     using NCloud.Core.Utils;
     using NCloud.React.Options;
 
@@ -102,14 +105,34 @@
             return this.fileIdGenerator.IsEqual(id1, id2);
         }
 
+        /// <summary>
+        /// The GetParentId.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public string GetParentId(string url)
         {
             return UrlUtils.GetParam(url, "parentId") ?? GetRootId();
         }
 
+        /// <summary>
+        /// The GetParentBaseId.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public string GetParentBaseId(string url)
         {
             return UrlUtils.GetParam(url, "parentBaseId") ?? GetRootBaseId();
+        }
+
+        /// <summary>
+        /// The RaiseError.
+        /// </summary>
+        /// <param name="error">The error<see cref="ErrorEnum"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
+        public Exception RaiseError(ErrorEnum error, params object[] args)
+        {
+            return Oops.Oh(error, args);
         }
     }
 }

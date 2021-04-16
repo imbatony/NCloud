@@ -1,7 +1,8 @@
 ﻿{
   "InitFiles": {
     "Urls": [
-      "local://我的目录?root=$USER_ROOT"
+      "local://我的目录?root=$USER_ROOT",
+      "github://imbatony?project=NCloud"
     ]
   }
 }

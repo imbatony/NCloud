@@ -1,7 +1,5 @@
 namespace NCloud.React
 {
-    using System.Linq;
-    using Furion;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -9,9 +7,11 @@ namespace NCloud.React
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using NCloud.Core.Abstractions;
+    using NCloud.Plugins.GitHub;
     using NCloud.React.Options;
     using NCloud.React.Service;
     using NCloud.React.Service.FileManager;
+    using Prise.DependencyInjection;
 
     /// <summary>
     /// Defines the <see cref="Startup" />.
@@ -37,7 +37,6 @@ namespace NCloud.React
         /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         /// <summary>
         /// The ConfigureServices.
         /// </summary>
@@ -48,13 +47,14 @@ namespace NCloud.React
             services.AddConfigurableOptions<InitFilesOptions>();
             services.AddConfigurableOptions<RootDriverOptions>();
             services.AddDataProtection();
+            services.AddPrise(ServiceLifetime.Singleton);
             services.AddSingleton<ISystemHelper, SystemHelper>();
             services.AddSingleton<IFileIdGenerator, Base64IdGenerator>();
             services.AddSingleton<IFileManagerProvider, VirtualFileManagerProvider>();
             services.AddSingleton<IFileManagerProvider, LocalFileManagerProvider>();
+            services.AddGitHub();
             services.AddSingleton<IFileManagerFactory, DefaultFileManagerFactory>();
             services.AddSingleton<RootManagerInitializer>();
-
             services.AddControllersWithViews()
                 .AddAppLocalization()
                 .AddInjectWithUnifyResult<RESTfulResultProvider>();
@@ -66,7 +66,6 @@ namespace NCloud.React
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// <summary>
         /// The Configure.
         /// </summary>
@@ -113,7 +112,6 @@ namespace NCloud.React
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿namespace NCloud.Core.Abstractions
 {
+    using System;
+    using NCloud.Core.Enum;
+
     /// <summary>
     /// Defines the <see cref="ISystemHelper" />.
     /// </summary>
@@ -66,5 +69,12 @@
         /// <param name="id2">The id2<see cref="string"/>.</param>
         /// <returns>The <see cref="bool"/>.</returns>
         public bool IsIdEqual(string id1, string id2);
+
+        /// <summary>
+        /// The RaiseError.
+        /// </summary>
+        /// <param name="error">The error<see cref="ErrorEnum"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
+        public Exception RaiseError(ErrorEnum error, params object[] args);
     }
 }

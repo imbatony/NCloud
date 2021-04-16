@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5B9D9CA2-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{534D1CCB-4889-4C3A-A39E-53FAE64989C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCloud.Plugins.Driver.Google", "..\Plugins\NCloud.Extensions.Driver.Google\NCloud.Plugins.Driver.Google.csproj", "{8546C1B3-619A-45EF-B8DB-2FFDFB792548}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCloud.Core", "NCloud.Core\NCloud.Core.csproj", "{CEACAA50-CB46-477A-AD8A-1857FB9A3B72}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68108E39-3A32-4395-B0CF-F136D773618A}"
@@ -17,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCloud.React", "NCloud.React\NCloud.React.csproj", "{A922537D-A151-4F91-B860-22177B8C8B4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCloud.Plugins.GitHub", "..\Plugins\NCloud.Plugins.Github\NCloud.Plugins.GitHub.csproj", "{80E07E15-A234-43EB-A46F-9F8013BF5AD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,18 +28,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Debug|x64.Build.0 = Debug|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Debug|x86.Build.0 = Debug|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Release|x64.ActiveCfg = Release|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Release|x64.Build.0 = Release|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Release|x86.ActiveCfg = Release|Any CPU
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548}.Release|x86.Build.0 = Release|Any CPU
 		{CEACAA50-CB46-477A-AD8A-1857FB9A3B72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CEACAA50-CB46-477A-AD8A-1857FB9A3B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEACAA50-CB46-477A-AD8A-1857FB9A3B72}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -64,12 +52,24 @@ Global
 		{A922537D-A151-4F91-B860-22177B8C8B4C}.Release|x64.Build.0 = Release|Any CPU
 		{A922537D-A151-4F91-B860-22177B8C8B4C}.Release|x86.ActiveCfg = Release|Any CPU
 		{A922537D-A151-4F91-B860-22177B8C8B4C}.Release|x86.Build.0 = Release|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Debug|x64.Build.0 = Debug|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Debug|x86.Build.0 = Debug|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Release|x64.ActiveCfg = Release|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Release|x64.Build.0 = Release|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Release|x86.ActiveCfg = Release|Any CPU
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8546C1B3-619A-45EF-B8DB-2FFDFB792548} = {534D1CCB-4889-4C3A-A39E-53FAE64989C3}
+		{80E07E15-A234-43EB-A46F-9F8013BF5AD3} = {534D1CCB-4889-4C3A-A39E-53FAE64989C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F994BD8-2F98-47CD-AF78-308FFF268208}

@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Furion.FriendlyException;
     using NCloud.Core.Abstractions;
     using NCloud.Core.Model;
 
@@ -114,7 +113,12 @@
             }
             else
             {
-                return this.fileInfos.Where(f => systemHelper.IsIdEqual(f.Id, id)).FirstOrDefault() ?? throw Oops.Oh(10002);
+                var file = this.fileInfos.Where(f => systemHelper.IsIdEqual(f.Id, id)).FirstOrDefault();
+                if (file == null)
+                {
+                    throw systemHelper.RaiseError(Core.Enum.ErrorEnum.File_Not_Found);
+                }
+                return file;
             }
         }
 

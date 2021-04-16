@@ -21,20 +21,13 @@
         private readonly Dictionary<string, IFileManager> fileManagers;
 
         /// <summary>
-        /// Defines the systemHelper.
-        /// </summary>
-        private readonly ISystemHelper systemHelper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultFileManagerFactory"/> class.
         /// </summary>
         /// <param name="providers">The drivers<see cref="IEnumerable{IDriver}"/>.</param>
-        /// <param name="systemHelper">The fileIdGenerator<see cref="ISystemHelper"/>.</param>
-        public DefaultFileManagerFactory(IEnumerable<IFileManagerProvider> providers, ISystemHelper systemHelper)
+        public DefaultFileManagerFactory(IEnumerable<IFileManagerProvider> providers)
         {
             this.providers = new List<IFileManagerProvider>(providers);
             this.fileManagers = new Dictionary<string, IFileManager>();
-            this.systemHelper = systemHelper;
         }
 
         /// <summary>
@@ -66,7 +59,7 @@
             }
             else
             {
-                IFileManager manager = driver.GreateFileManager(url,out var id);
+                IFileManager manager = driver.GreateFileManager(url, out var id);
                 this.fileManagers[id] = manager;
                 return manager;
             }
@@ -79,14 +72,14 @@
         /// <returns>The <see cref="IFileManagerProvider"/>.</returns>
         public IFileManagerProvider GetProviderByType(string type)
         {
-            return this.providers.Where(e => e.GetType() == type).First();
+            return this.providers.Where(e => e.GetSupportType() == type).First();
         }
 
         /// <summary>
         /// The AddDriver.
         /// </summary>
         /// <param name="provider">The driver<see cref="IFileManagerProvider"/>.</param>
-        void IFileManagerFactory.AddProvider(IFileManagerProvider provider)
+        public void AddProvider(IFileManagerProvider provider)
         {
             this.providers.Add(provider);
         }
