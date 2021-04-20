@@ -49,8 +49,8 @@
         public IFileManager GreateFileManager(string url, out string id)
         {
             var project = UrlUtils.GetParam(url, "project");
-            var owner = UrlUtils.GetHost(url);
-            var displayName = UrlUtils.GetParam(url, "displayName") ?? project;
+            var owner = UrlUtils.GetParam(url,"owner");
+            var displayName = helper.GetFileManagerDisplayName(url);
             id = helper.CreateFileManagerBaseId(url);
             return new GitHubFileManager(helper, gitHubClient, displayName, project, owner, id, helper.GetParentBaseId(url), helper.GetParentId(url));
         }

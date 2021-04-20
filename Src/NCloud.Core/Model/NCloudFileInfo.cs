@@ -69,7 +69,8 @@
             /// <summary>
             /// Defines the Other.
             /// </summary>
-            Other
+            Other,
+            Link
         }
     }
 }

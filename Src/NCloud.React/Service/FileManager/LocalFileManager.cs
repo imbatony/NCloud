@@ -1,13 +1,12 @@
 ﻿namespace NCloud.React.Service.FileManager
 {
-    using Furion.FriendlyException;
-    using Microsoft.Extensions.Logging;
-    using NCloud.Core.Abstractions;
-    using NCloud.Core.Model;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Microsoft.Extensions.Logging;
+    using NCloud.Core.Abstractions;
+    using NCloud.Core.Model;
 
     /// <summary>
     /// Defines the <see cref="LocalFileManager" />.
@@ -50,6 +49,11 @@
         private readonly ILogger<LocalFileManager> logger;
 
         /// <summary>
+        /// Defines the resolver.
+        /// </summary>
+        private readonly LinkedFileResolver resolver;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LocalFileManager"/> class.
         /// </summary>
         /// <param name="helper">The SystemHelper<see cref="ISystemHelper"/>.</param>
@@ -59,21 +63,28 @@
         /// <param name="parentBaseId">The parentBaseId<see cref="string"/>.</param>
         /// <param name="parentId">The parentId<see cref="string"/>.</param>
         /// <param name="logger">The logger<see cref="ILogger"/>.</param>
-        public LocalFileManager(ISystemHelper helper, string root, string name, string baseId, string parentBaseId, string parentId, ILogger<LocalFileManager> logger)
+        /// <param name="resolver">The resolver<see cref="LinkedFileResolver"/>.</param>
+        public LocalFileManager(ISystemHelper helper, string root, string name, string baseId, string parentBaseId, string parentId, ILogger<LocalFileManager> logger, LinkedFileResolver resolver)
         {
             this.helper = helper;
             root = root.Replace("$TEMP", Path.GetTempPath());
             root = root.Replace("$CUR", Directory.GetCurrentDirectory());
             root = root.Replace("$USER_ROOT", Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+            root = root.Replace("$BASE_PATH", System.AppDomain.CurrentDomain.BaseDirectory);
             this.rootPath = root;
             this.name = name;
             this.baseId = baseId;
             this.parentBaseId = parentBaseId;
             this.parentId = parentId;
             this.logger = logger;
+            this.resolver = resolver;
             this.logger.LogInformation($"Loading rootPath:{rootPath} name:{name} baseId:{baseId}");
         }
 
+        /// <summary>
+        /// The GetBaseId.
+        /// </summary>
+        /// <returns>The <see cref="string"/>.</returns>
         public string GetBaseId()
         {
             return this.GetBaseId();
@@ -105,20 +116,24 @@
             if (File.Exists(filePath))
             {
                 var f = new FileInfo(filePath);
-                fileInfo = new NCloudFileInfo
+                bool linkedFile = this.resolver.TryResolveLinkedFile(f.Name, () => File.ReadAllText(filePath), f.Extension, this.baseId, fileId, out fileInfo);
+                if (!linkedFile)
                 {
-                    CreateTime = f.CreationTime,
-                    UpdateTime = f.LastWriteTime,
-                    Ext = f.Extension,
-                    Id = fileId,
-                    Name = f.Name,
-                    Type = NCloudFileInfo.FileType.Other,
-                    Size = f.Length,
-                    BaseId = this.baseId,
-                    ParentId = helper.GetFileIdByPath(f.Directory.FullName),
-                    ParentBaseId = this.baseId,
+                    fileInfo = new NCloudFileInfo
+                    {
+                        CreateTime = f.CreationTime,
+                        UpdateTime = f.LastWriteTime,
+                        Ext = f.Extension,
+                        Id = fileId,
+                        Name = f.Name,
+                        Type = NCloudFileInfo.FileType.Other,
+                        Size = f.Length,
+                        BaseId = this.baseId,
+                        ParentId = helper.GetFileIdByPath(f.Directory.FullName),
+                        ParentBaseId = this.baseId,
 
-                };
+                    };
+                }
             }
             else if (Directory.Exists(filePath))
             {
@@ -187,8 +202,16 @@
                         else
                         {
                             var fInfo = (FileInfo)f;
-                            fileInfo.Type = NCloudFileInfo.FileType.Other;
-                            fileInfo.Size = fInfo.Length;
+                            bool linkedFile = this.resolver.TryResolveLinkedFile(f.Name, () => File.ReadAllText(f.FullName), f.Extension, this.baseId, fileId, out var linkedFileInfo);
+                            if (!linkedFile)
+                            {
+                                fileInfo.Type = NCloudFileInfo.FileType.Other;
+                                fileInfo.Size = fInfo.Length;
+                            }
+                            else
+                            {
+                                fileInfo = linkedFileInfo;
+                            }
                         }
                         return fileInfo;
                     }).ToList();
@@ -208,7 +231,7 @@
         /// <summary>
         /// The GetFileStream.
         /// </summary>
-        /// <param name="id">The id<see cref="string"/>.</param>
+        /// <param name="fileInfo">The fileInfo<see cref="NCloudFileInfo"/>.</param>
         /// <returns>The <see cref="(string name, Stream fileStream)"/>.</returns>
         public Stream GetFileStream(NCloudFileInfo fileInfo)
         {

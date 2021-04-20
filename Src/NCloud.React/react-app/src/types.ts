@@ -20,6 +20,7 @@ export interface RootConfig {
 export enum FileType {
     Directory = 0,
     Other,
+    Link
 }
 export interface FileInfo {
     name: string;

@@ -51,15 +51,15 @@
         /// <returns>The <see cref="IFileManager"/>.</returns>
         public IFileManager GetFileManagerByUrl(string url)
         {
-            IFileManagerProvider driver = this.providers.Where(e => e.IsSupport(url)).First();
-            var baseId = driver.GetFileMangerBaseIdByUrl(url);
+            IFileManagerProvider provider = this.providers.Where(e => e.IsSupport(url)).First();
+            var baseId = provider.GetFileMangerBaseIdByUrl(url);
             if (this.fileManagers.ContainsKey(baseId))
             {
                 return fileManagers[baseId];
             }
             else
             {
-                IFileManager manager = driver.GreateFileManager(url, out var id);
+                IFileManager manager = provider.GreateFileManager(url, out var id);
                 this.fileManagers[id] = manager;
                 return manager;
             }

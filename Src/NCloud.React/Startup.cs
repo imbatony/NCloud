@@ -52,9 +52,11 @@ namespace NCloud.React
             services.AddSingleton<IFileIdGenerator, Base64IdGenerator>();
             services.AddSingleton<IFileManagerProvider, VirtualFileManagerProvider>();
             services.AddSingleton<IFileManagerProvider, LocalFileManagerProvider>();
+            services.AddSingleton<IFileManagerProvider, ExternalFileManagerProvider>();
             services.AddGitHub();
             services.AddSingleton<IFileManagerFactory, DefaultFileManagerFactory>();
             services.AddSingleton<RootManagerInitializer>();
+            services.AddSingleton<LinkedFileResolver>();
             services.AddControllersWithViews()
                 .AddAppLocalization()
                 .AddInjectWithUnifyResult<RESTfulResultProvider>();

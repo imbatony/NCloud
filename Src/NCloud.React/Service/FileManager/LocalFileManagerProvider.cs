@@ -22,14 +22,21 @@
         private readonly ILogger<LocalFileManager> logger;
 
         /// <summary>
+        /// Defines the resolver.
+        /// </summary>
+        private readonly LinkedFileResolver resolver;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LocalFileManagerProvider"/> class.
         /// </summary>
         /// <param name="helper">The driver<see cref="ISystemHelper"/>.</param>
         /// <param name="logger">The logger<see cref="ILogger{LocalFileManager}"/>.</param>
-        public LocalFileManagerProvider(ISystemHelper helper, ILogger<LocalFileManager> logger)
+        /// <param name="resolver">The resolver<see cref="LinkedFileResolver"/>.</param>
+        public LocalFileManagerProvider(ISystemHelper helper, ILogger<LocalFileManager> logger, LinkedFileResolver resolver)
         {
             this.helper = helper;
             this.logger = logger;
+            this.resolver = resolver;
         }
 
         /// <summary>
@@ -68,7 +75,7 @@
             id = helper.CreateFileManagerBaseId(url);
             var rootPath = UrlUtils.GetParam(url, "root");
             var displayName = helper.GetFileManagerDisplayName(url);
-            return new LocalFileManager(helper, rootPath, displayName, id, helper.GetParentBaseId(url), helper.GetParentId(url), this.logger);
+            return new LocalFileManager(helper, rootPath, displayName, id, helper.GetParentBaseId(url), helper.GetParentId(url), this.logger, resolver);
         }
 
         /// <summary>

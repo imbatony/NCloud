@@ -21,7 +21,7 @@ interface FileSizeProps {
 
 function FileOperations({ file }: { file: FileInfo }) {
     const { message } = useI18n();
-    if (file.type == FileType.Directory) {
+    if (file.type != FileType.Other) {
         return (
             null
         )

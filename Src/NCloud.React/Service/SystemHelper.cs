@@ -70,7 +70,7 @@
         public string GetFileManagerDisplayName(string url)
         {
             var name = UrlUtils.GetHost(url);
-            var displayName = UrlUtils.GetParam(url, "displayName") ?? name;
+            var displayName = UrlUtils.GetParam(url, "_nd") ?? UrlUtils.GetParam(url, "displayName") ?? name;
             return displayName;
         }
 
@@ -112,7 +112,7 @@
         /// <returns>The <see cref="string"/>.</returns>
         public string GetParentId(string url)
         {
-            return UrlUtils.GetParam(url, "parentId") ?? GetRootId();
+            return UrlUtils.GetParam(url, "_npid") ?? UrlUtils.GetParam(url, "parentId") ?? GetRootId();
         }
 
         /// <summary>
@@ -122,7 +122,7 @@
         /// <returns>The <see cref="string"/>.</returns>
         public string GetParentBaseId(string url)
         {
-            return UrlUtils.GetParam(url, "parentBaseId") ?? GetRootBaseId();
+            return UrlUtils.GetParam(url, "_npbid") ?? UrlUtils.GetParam(url, "parentBaseId") ?? GetRootBaseId();
         }
 
         /// <summary>

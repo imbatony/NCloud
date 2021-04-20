@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Furion" Version="1.14.1" />
+    <PackageReference Include="ini-parser" Version="2.5.2" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.2" />
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.1.2">
       <PrivateAssets>all</PrivateAssets>
@@ -27,12 +28,14 @@
     <Content Remove="react-app\**" />
     <None Remove="react-app\**" />
     <None Include="react-app\**" Exclude="react-app\node_modules\**" />
+    <ExampleFiles Include="..\..\example\**"/>
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\Plugins\NCloud.Plugins.GitHub\NCloud.Plugins.GitHub.csproj" />
     <ProjectReference Include="..\NCloud.Core\NCloud.Core.csproj" />
   </ItemGroup>
+
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
@@ -41,9 +44,12 @@
     </Exec>
     <Error Condition="'$(ErrorCode)' != '0'" Text="Yarn is required to build and run this project." />
     <Message Importance="high" Text="Restoring dependencies using 'yarn'. This may take several minutes..." />
-    <Exec WorkingDirectory="react-app\" Command="yarn install" /> 
-  </Target>
+    <Exec WorkingDirectory="react-app\" Command="yarn install" />
 
+  </Target>
+  <Target Name="CopyExampleFolder" AfterTargets="Build">
+    <Copy SourceFiles="@(ExampleFiles)" DestinationFiles="@(ExampleFiles->'$(OutputPath)example\%(RecursiveDir)%(Filename)%(Extension)')"></Copy>
+  </Target>
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="react-app\" Command="yarn install" />

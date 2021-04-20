@@ -24,6 +24,17 @@
         /// The GetUrlSchema.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public static bool HasQuery(string url)
+        {
+            var uri = new Uri(url);
+            return !string.IsNullOrEmpty(uri.Query);
+        }
+
+        /// <summary>
+        /// The GetUrlSchema.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
         /// <param name="key">The key<see cref="string"/>.</param>
         /// <returns>The <see cref="string"/>.</returns>
         public static string GetParam(string url, string key)
