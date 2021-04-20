@@ -11,7 +11,6 @@ namespace NCloud.React
     using NCloud.React.Options;
     using NCloud.React.Service;
     using NCloud.React.Service.FileManager;
-    using Prise.DependencyInjection;
 
     /// <summary>
     /// Defines the <see cref="Startup" />.
@@ -47,7 +46,6 @@ namespace NCloud.React
             services.AddConfigurableOptions<InitFilesOptions>();
             services.AddConfigurableOptions<RootDriverOptions>();
             services.AddDataProtection();
-            services.AddPrise(ServiceLifetime.Singleton);
             services.AddSingleton<ISystemHelper, SystemHelper>();
             services.AddSingleton<IFileIdGenerator, Base64IdGenerator>();
             services.AddSingleton<IFileManagerProvider, VirtualFileManagerProvider>();

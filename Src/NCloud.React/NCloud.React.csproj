@@ -20,7 +20,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-    <PackageReference Include="Prise" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,7 +27,10 @@
     <Content Remove="react-app\**" />
     <None Remove="react-app\**" />
     <None Include="react-app\**" Exclude="react-app\node_modules\**" />
-    <ExampleFiles Include="..\..\example\**"/>
+    <Content Include="example\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
   
   <ItemGroup>
@@ -46,9 +48,6 @@
     <Message Importance="high" Text="Restoring dependencies using 'yarn'. This may take several minutes..." />
     <Exec WorkingDirectory="react-app\" Command="yarn install" />
 
-  </Target>
-  <Target Name="CopyExampleFolder" AfterTargets="Build">
-    <Copy SourceFiles="@(ExampleFiles)" DestinationFiles="@(ExampleFiles->'$(OutputPath)example\%(RecursiveDir)%(Filename)%(Extension)')"></Copy>
   </Target>
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
