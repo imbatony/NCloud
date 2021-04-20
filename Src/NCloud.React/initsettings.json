@@ -1,7 +1,7 @@
 ﻿{
   "InitFiles": {
     "Urls": [
-      "local://测试目录?root=$BASE_PATH\\example",
+      "local://测试目录?root=$BASE_PATH/example",
       "github://NCloud?owner=imbatony&project=NCloud"
     ]
   }
